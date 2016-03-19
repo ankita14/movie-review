@@ -1,0 +1,385 @@
+<section class="title">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span6">
+				<h1><%= @movie.title %></h1>
+			</div>
+			<div class="span6">
+				<ul class="breadcrumb pull-right">
+					<li><a href="/">Home</a> <span class="divider">/</span></li>
+					<li class="active">Movie</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+	<!-- / .title --> 
+
+<section id="about-us" class="container">
+<div class="row-fluid">
+	<div class="span8">
+		<div class="blog">
+			<div class="widget widget-popular">
+				<div class="widget-blog-items">
+					<% @detail_top_banner.each do |banner| %>
+
+						<% if banner.ad_type == 'Text' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Banner' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+												<% if banner.link.present? %>
+													<%= link_to( image_tag(banner.banner), banner.link) %>
+												<% else %>
+													<%= image_tag(banner.banner) %>
+												<% end %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Google Ad' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">
+										<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+											<%= raw banner.google_add_js %>
+										</div>
+									</div>
+								</div>
+							<% end %>
+
+					<% end %>
+				</div>                        
+			</div>
+			<div class="blog-item well">
+
+						<!-- <h2><%#= link_to @movie.title, movie_with_title_path(@movie) %></h2> -->
+						
+				<!-- <a href="#"><h2><%#= @blog.title %></h2></a> -->
+			  <p>
+				<% if @movie.image.present? %>
+				  <%= image_tag(@movie.image.indexThumb.url) %>
+				<% else %>
+					<%= image_tag("/assets/not_available.jpg") %>
+				<% end %>        
+			  </p>
+
+			  <% if @movie.release_date? %>
+			  	<p><h4><b>Release Date : </b> <%= @movie.release_date %></h4></p>
+			  <% end %>
+
+			  <% if @movie.genres.present? %>
+			  	<p><h4><b>Genre : </b> 
+			  	<% @movie.genres.each do |genre| %>
+						<%= link_to genre.title, genre_with_title_path(genre) %> 
+					<% end %></h4></p>
+			  <% end %>
+
+			  <% if @movie.director? %>
+			  	<p><h4><b>Directed By : </b> <%= @movie.director %></h4></p>
+			  <% end %>
+
+			  <% if @movie.producer? %>
+			  	<p><h4><b>Produced By : </b> <%= @movie.producer %></h4></p>
+			  <% end %>
+
+			  <% if @movie.music_director? %>
+			  	<p><h4><b>Music By : </b> <%= @movie.music_director %></h4></p>
+			  <% end %>
+
+			  <% if @movie.star_cast? %>
+			  	<p><h4><b>Stars : </b> <%= @movie.star_cast %></h4></p>
+			  <% end %>
+
+			  <% if @movie.movie_type %>
+			  	<p><h4><b>Movie Type : </b> <%= @movie.movie_type.title %></h4></p>
+			  <% end %>
+
+			  <% if @movie.movie_length? %>
+			  	<p><h4><b>Movie Length : </b> <%= @movie.movie_length %></h4></p>
+			  <% end %>
+
+			  <% if @movie.description? %>
+			  	<p><h4><b>StoryPlot :</b> <%= @movie.description.html_safe %></h4></p>
+			  <% end %>
+
+			  <% if @movie.movie_reviews? %>
+			  	<p><h4><b>Reviews :</b> <%= @movie.movie_reviews.html_safe %></h4></p>
+			  <% end %>
+
+			  <% if @movie.youtube_url? %>
+			  	<!-- <p><h4><b>Youtube URL : </b> --> 
+			  	<div class="embed-container">  
+					  <%= embed(@movie.youtube_url) %>
+					</div>  
+			  	<!-- </h4></p> -->
+			  <% end %>
+
+			  <% if @movie.release_date.present? %>
+
+					<% unless @movie.release_date.future? %>
+
+						<% if @movie.critics_ratings.count > 0 %>
+							<h4>Critics Ratings:</h4>
+
+							<% @movie.critics_ratings.each do |cr| %>
+								<b> <%= cr.title%>:</b>
+								<div id="starrating">
+									<div class="c_rating-<%= cr.id %>">
+										
+									</div>
+									<% if cr.reviews %>
+										<p><%= cr.reviews.html_safe %></p>
+									<% end %>
+								</div>
+								<script type="text/javascript">
+									$(function(){
+										$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+												$('.c_rating-<%= cr.id %>').raty({ score: <%= cr.rating %>,
+										  	readOnly: true,
+									    	path: '/assets'
+											});
+										})
+									})
+								</script>	
+								<br/>
+							<% end %>
+
+						<% end %>
+
+					<% end %>
+
+				<% end %>
+				<br/><br/>
+
+				<% if @movie.release_date.present? %>
+
+					<% unless @movie.release_date.future? %>
+
+						<% @total_reviews = 0 %>
+								<%# @total_count = 0 %>
+						<% @total_count = @movie.reviews.count %>
+
+						<% @average_user_reviews = 0.0 %>
+
+						<%# unless @movie.release_date.future? %>
+
+					  <div id="starrating">
+							<div id="stars">
+								<h4>Average User Ratings:</h4>
+							</div>
+						</div>
+
+						<%# end %>
+
+				  	<p class="pull-right"><i class="icon-comment pull"></i> 	<%= @movie.reviews.count %> <% if @movie.reviews.count < 2 %> Review <% else %> Reviews <% end %>
+				  	</p>
+
+				  <% end %>
+
+			  <% end %>
+
+			<p>&nbsp;</p>
+
+			<% if @movie.release_date.present? %>
+
+				<% unless @movie.release_date.future? %>
+				
+					<div id="comments" class="comments">
+
+						<h4> <%= @movie.reviews.count %> Review(s)</h4>
+
+						
+
+						<% if @movie.reviews.count == 0 %>
+							<div class="comments-list">
+								<div class="comment media">
+									<div class="media-body">
+										<strong>No Reviews yet.</strong>
+									</div>
+								</div>
+							</div>
+						<% else %>
+
+
+							<div class="comments-list">
+								<%# @total_reviews = 0 %>
+								<%# @total_count = 0 %>
+								<%# @total_count = @movie.reviews.count %>
+								<% @movie.reviews.each do |review| %>
+									<% @total_reviews = @total_reviews + review.rating %>
+									<div class="comment media">
+										<div class="pull-left">
+											<!-- <img class="avatar" src="images/sample/cAvatar1.jpg" alt="" />   -->
+										</div>
+
+										<div class="media-body">
+											<strong>Posted by <% if review.user %> <%= review.user.email %><% elsif review.admin %><%= review.admin.email %><% end %></strong>   on <small> <%= review.created_at.strftime("%b %dth, %Y") %> </small>
+											<div id="starrating">
+												<div class="rating-<%= review.id %>">
+
+												</div>
+											</div>
+											<%= review.comment.html_safe %>										
+												
+										 </div>
+									</div>
+									<script type="text/javascript">
+										$(function(){
+											$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+													$('.rating-<%= review.id %>').raty({ score: <%= review.rating %>,
+											  	readOnly: true,
+										    	path: '/assets'
+												});
+											})
+										})
+								</script>	
+								<% end %>	
+								
+							</div>
+
+							<% if user_signed_in? %>
+							<%= link_to 'Write a Review',  movie_with_review_path(@movie) %>
+						<% else %>
+							<h5><%= link_to 'Login to Write a Review.', new_user_session_path %></h5>
+						<% end %>
+
+						<% end %>
+
+						<br/>
+
+						<div id="disqus_thread"></div>
+							<script>
+							    /**
+							     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+							     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+							     */
+							    /*
+							    var disqus_config = function () {
+							        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+							        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+							    };
+							    */
+							    (function() {  // DON'T EDIT BELOW THIS LINE
+							        var d = document, s = d.createElement('script');
+							        
+							        s.src = '//moviereviewviva.disqus.com/embed.js';
+							        
+							        s.setAttribute('data-timestamp', +new Date());
+							        (d.head || d.body).appendChild(s);
+							    })();
+							</script>
+							<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+						
+
+					</div>
+
+				<% end %>
+
+			<% end %>
+
+		</div>
+
+		
+				<div class="widget widget-popular">
+				<div class="widget-blog-items">
+					<% @detail_bottom_banner.each do |banner| %>
+						<% if banner.ad_type == 'Text' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Banner' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+												<% if banner.link.present? %>
+													<%= link_to( image_tag(banner.banner), banner.link) %>
+												<% else %>
+													<%= image_tag(banner.banner) %>
+												<% end %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Google Ad' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">
+										<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+											<%= raw banner.google_add_js %>
+										</div>
+									</div>
+								</div>
+							<% end %>
+									
+					<% end %>
+				</div>                        
+			</div>
+
+
+		<script type="text/javascript">
+			$(function(){
+				$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+					<%# if @total_count.to_i > 0 %>	
+						$('#stars').raty({ score: <%= @average_user_reviews %>,
+			  			readOnly: true,
+		    			path: '/assets'
+						});
+					<%# end %>						
+				})
+			})					
+		</script>
+		
+		<!-- <div id="starrating">
+			Rating: <div id="stars">: </div>
+		</div>
+		<br/> -->
+		<!-- End Blog Item -->
+		<!-- Ratings -->
+		<%#= rating_for @movie, 'rating' %>
+	</div>
+</div>
+<aside class="span4">
+	<%= render "layouts/top_rated" %>
+<!-- End Popular Posts -->        
+
+<%= render "layouts/genres" %>
+<!-- End Category Widget -->
+
+<%#= render "layouts/movietype" %>
+<%= render "layouts/sidebar_banner" %>
+
+</aside>
+</div>
+
+</section>
+<script id="dsq-count-scr" src="//moviereviewviva.disqus.com/count.js" async></script>
+
+<style type="text/css">
+	p{
+		font-size: 17px !important;
+	}
+</style>

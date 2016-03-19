@@ -1,0 +1,18 @@
+<!-- <p>Bollywood Hungama
+Nam myoho Renge kyo!!</p>
+ -->
+<%= form_tag("/movies/bollywood_hungama") do %>
+	<!-- <div class="col-sm-10 controls"> -->
+		<%= text_field_tag 'movie[url]', nil, :class => "form-control wid", placeholder: 'Enter URL...' %>
+	<!-- </div> -->
+	<br/>
+	<%= submit_tag 'Fetch', :class =>"btn btn-primary" do %>
+		<i class="icon-white icon-ok"></i>
+	<% end %>
+<% end %>
+
+<style type="text/css">
+	.wid {
+		width: 50% !important;
+	}
+</style>

@@ -1,0 +1,65 @@
+
+  <section id="contact-page" class="container">
+    <div class="row-fluid">
+
+      <div class="span8">
+
+      
+
+        <h4>New Review</h4>
+        <div class="status alert alert-success" style="display: none"></div>
+          <%= form_for([@review]) do |f| %>
+            <% if @review.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+                <ul>
+                <% @review.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="field">
+              <div id="star-rating"></div>
+            </div>
+            <div class="field">
+              <%= f.label :comment %><br>
+              <%= f.cktext_area :comment, rows: 10 %>
+            </div>
+            <div class="field">
+              <%=  f.hidden_field :movie_id, :value => @movie_id %>
+            <div class="actions">
+              <%= f.submit %>
+            </div>
+          <% end %>
+          <%#= link_to 'Back', reviews_path %>
+          <br/>
+          <br/>
+
+          <div class="span12">
+
+            
+          </div>
+
+
+
+        
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- <br/><br/><br/><br/><br/><br/><br/><br/><br/> -->
+
+<script>
+  $('#star-rating').raty({
+    half: true,
+    path: '/assets/',
+    scoreName: 'review[rating]'
+  });
+</script>
+

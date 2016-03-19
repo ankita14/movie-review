@@ -1,0 +1,47 @@
+<% @latest = Movie.where(:release_date => 6.months.ago..Date.today).order(release_date: :desc) %>
+
+<table class="table table-condensed table-striped">
+	<thead>
+		<tr>
+		<th class="shrink">
+		<th class="" title="" rel="tooltip" data-original-title="">Title</th>
+		<th class="" title="" rel="tooltip" data-original-title="">Releasing Date</th>
+		<th class="" title="" rel="tooltip" data-original-title="">Genres</th>
+		<th class="" title="" rel="tooltip">Director</th>
+		<th class="" title="" rel="tooltip">Rating</th>
+		<th class="last shrink"></th>
+		</tr>
+	</thead>
+	<%#= link_to '<i class="glyphicon glyphicon-th-large"></i> Dasboard'.html_safe, deals_path, class: 'btn btn-default' %>
+	<tbody>
+		<% @latest.each do |movie| %>
+			<tr class="movie_row">
+			<td>
+			<td class="title_field string_type"><%= movie.title %></td>
+			<td class="release_date_field string_type"><%= movie.release_date %></td>
+			<td class="genres_field has_and_belongs_to_many_association_type" title=""><% if movie.genres.present? %>| <% movie.genres.each do |genre| %><%= genre.title %> | <% end %> <% end %></td>
+			<td class="director_field string_type"><%= movie.director %></td>
+			<td class="rating_field float_type"><%= movie.rating %></td>
+			<td class="last links">
+			  <ul class="inline list-inline">
+					<li class="icon edit_member_link " rel="tooltip" title="Edit">
+						<%= link_to '<i class="icon-pencil"></i>'.html_safe,rails_admin.edit_path(model_name: 'movie', id: movie.id) %>
+							<!-- <i class="icon-pencil"></i> -->
+						
+							<span style="display:none">Edit</span>
+					</li>
+					<li class="icon delete_member_link " rel="tooltip" title="Delete">
+						<%= link_to '<i class="icon-remove"></i>'.html_safe, rails_admin.delete_path(model_name: 'movie', id: movie.id) %>
+							<!-- <i class="icon-remove"></i> -->
+						
+						<span style="display:none">Delete</span>
+					</a>
+					</li>
+				</ul>
+			</td>
+			</tr>
+		<% end %>
+	</tbody>
+	
+</table>
+

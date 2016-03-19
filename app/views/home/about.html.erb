@@ -1,0 +1,210 @@
+<body>
+	<section class="title">
+		<div class="container">
+			<div class="row-fluid">
+				<div class="span6">
+					 <h1>About Us</h1>
+				</div>
+				<div class="span6">
+					<ul class="breadcrumb pull-right">
+						<li><a href="/">Home</a> <span class="divider">/</span></li>
+						<li class="active">About Us</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+		<!-- / .title -->         
+
+	<section id="about-us" class="container main">
+		<div class="row-fluid">
+			<div class="span8">
+				<div class="blog">
+					<div class="widget widget-popular">
+							<div class="widget-blog-items">
+								<% @page_top_banner.each do |banner| %>
+
+									<% if banner.ad_type == 'Text' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Banner' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+												<% if banner.link.present? %>
+													<%= link_to( image_tag(banner.banner), banner.link) %>
+												<% else %>
+													<%= image_tag(banner.banner) %>
+												<% end %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Google Ad' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">
+										<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+											<%= raw banner.google_add_js %>
+										</div>
+									</div>
+								</div>
+							<% end %>
+
+								<% end %>
+							</div>                        
+						</div>
+					<div class="blog-item well">
+						<div class="blog-meta clearfix">
+							<p class="pull-left">
+								<div class=" ">
+                    <section class="topspace30 bottomspace30">
+                        <div class="">
+                            <div class="col-md-12  ">
+
+                                <!--<h4>Full Width</h4>-->
+
+                                <span class="colortext"><strong>Vivacity InfoTech Pvt. Ltd. , an ISO 9001:2008 Certified Company,</strong></span> is a Global IT Services company with expertise in outsourced product development and custom software development with focusing on software development, IT consulting, customized development. We are consistently delivering offshore outsourcing solutions, quality software products and solutions to start-ups, mid-size and large enterprises worldwide. We have 200+ satisfied clients worldwide.
+                                <br/>
+                                <br/>
+                                <span class="colortext"><strong>Vivacity InfoTech Pvt. Ltd.</strong></span> was incorporated in 2008 with believe in Indian values of global oneness <strong>"Vasudhaiv Kutumbakam"</strong> (The planet as a family) and share the common vision and conceptual outlook towards the future of clients, we are "DESIGNING THE FUTURE".
+                            </div>
+
+                        </div>
+                        <br />
+
+                        <!--One Half + One Half
+
+    ================================================== -->
+
+                        <div class="">
+                            <div class="col-md-6">
+                                <h5><span class="colortext"><strong>Vivacity InfoTech Pvt. Ltd.</strong></span> has expertise in : </h5>
+                                <ul class="icons arrowlist">
+                                    <li>Outsourced Product Development</li>
+                                    <li>Mobile Apps Development</li>
+                                    <li>Customized Solutions</li>
+                                    <li>Web Application development</li>
+                                    <li>Ecommerce solutions</li>
+                                    <li>Multimedia and Designing</li>
+                                    <li>Consulting Services</li>
+                                    <li><a href="http://www.lemonpix.com/" target="_blank"><span class="colortext">Web Hosting</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>We are offering our specialist services in the following domains: </h5>
+                                <ul class="icons arrowlist">
+                                    <li>Travel</li>
+                                    <li>Healthcare</li>
+                                    <li>Manufacturing</li>
+                                    <li>Finance and Debt Management</li>
+                                    <li>Education and Sports</li>
+                                    <li>Social Media and Networking</li>
+                                    <li>Human Resource Management</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-12">
+
+                            <!--<h4>Full Width</h4>-->
+
+
+                            <span class="colortext"><strong>Our Team:</strong></span> We have young, nimble team with passion for delivering superior software solutions, products and customer services. Our team member's experience varies from 3 years to 8 years in different domains and technologies. In this dynamic IT world, we provide regular training to our team members to be updated about the latest in the industry. Our in-house training and research department consistently work on the latest trends and pick best of the best. We always try to opt best in the current market and provide robust and perfect solution to our client with cost cutting.
+                            <br/>
+                            <br/>
+                            <span class="colortext"><strong>Our Approach:</strong></span> We have good success ratio, high ratio of client retention and product delivery ratio. Its all possible due to our approach and vision towards the work and target. How we see them, how we make targets, what are the plans to achieve these targets, how we execute the plan to achieve the targets etc. Its completely based on our approach towards our work, client, technologies etc. Our approach is:
+                            <ul class="icons arrowlist col-md-12"><br>
+                                <li><span class="colortext">Technology driven</span> - We understand very well about the market's demand. What our client wants and whats new in the market. This analysis help us to pick best technology for our clients so that we can deliver the product with quality output. Our analysis helps us to pick the best and advanced technology for our client's so they feel good with the solution.</li><br>
+
+                                <li><span class="colortext">Client driven</span> - Clients are backbone of any service providing company. We respect our clients and understand their demand very well. We believe in quality not in quantity. We believe in client satisfaction and long term relationship with our clients. We understand our client's requirement very well and provides best solution to them with easy steps so that they feel comfortable working with us. In this comfort zone, they are able to share their views more accurately and our highly talented professionals grabs client's need properly. We listen to our clients on regular basis and ask them for feedback about our services which helps us to improve.</li>
+                            </ul>
+                            <br/>We are providing support and reliable services that have been well appreciated by our valuable customers. We have NO Hidden Charges, NO Extra Fee and NO set up charges. Please provide us a chance to work with you, share your details <a href="../getquote.html"><span class="colortext">here</span></a> so that we can provide you quotation.
+                        </div>
+                        <div class="col-md-6" style='margin:10px 0 10px -6px; float:right;text-align:right;'> <span class='st_facebook_hcount'></span>
+                            <span class='st_googleplus_hcount'></span>
+                            <span class='st_twitter_hcount'></span>
+
+                        </div>
+                    </section>
+                </div>
+								<!-- <p>Established in 1976, Bland Landscaping Company proudly serves the Triangle as one of the leading full-service providers for high-end residential estates and commercial landscaping.</p>
+								<p>We are committed to operating as a sustainable business, to providing innovative services, and to reducing our environmental impact. Sustainability is part of our company culture, and we have received over 100 state and national awards for environmental improvement and landscape excellence.</p>
+								<p>Bland Landscaping is made up of nearly 200 highly skilled landscape experts, including a permanent team of professional turfgrass and horticulture managers, landscape designers, chemical technicians, and floriculturists.</p>
+								<p>Our company was founded on and continues to operate under the principles of honesty, integrity, excellence, professionalism, and progressiveness. We will continue to provide superior service and exceptional results to our clients, while maintaining a continued sense of pride in our employees.</p> -->
+								<hr>		  
+							</p>													
+						</div>	
+
+					</div>
+				</div>
+				<div class="widget widget-popular">
+							<div class="widget-blog-items">
+								<% @page_bottom_banner.each do |banner| %>
+
+									<% if banner.ad_type == 'Text' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Banner' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+												<% if banner.link.present? %>
+													<%= link_to( image_tag(banner.banner), banner.link) %>
+												<% else %>
+													<%= image_tag(banner.banner) %>
+												<% end %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Google Ad' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">
+										<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+											<%= raw banner.google_add_js %>
+										</div>
+									</div>
+								</div>
+							<% end %>
+									
+								<% end %>
+							</div>                        
+						</div>
+			</div>
+
+			<aside class="span4">
+				<%= render "layouts/top_rated" %>
+				<%= render "layouts/genres" %>			
+				<%#= render "layouts/movietype" %>	
+				<%= render "layouts/sidebar_banner" %>		
+			</div> 				
+			</aside>
+		</div>
+	</section>
+
+</body>
+</html>

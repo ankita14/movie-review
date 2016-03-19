@@ -1,0 +1,230 @@
+	<section class="no-margin">
+
+	<!-- <div style="width: 100%"><iframe width="100%" height="200" src="http://www.maps.ie/create-google-map/map.php?width=100%&amp;height=200&amp;hl=en&amp;q=%20C-6%2F82%2C%20Chitrakoot%2C%20%20%20%20%20Vaishali%20Nagar%2C%20Jaipur%20%E2%80%93%20302021%20%20%20%20%20INDIA+(%20Vivacity%20InfoTech%20Pvt.%20Ltd.)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=A&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="http://www.mapsdirections.info/crear-un-mapa-de-google/">insertar mapa google</a> by <a href="http://www.maps.ie/">Maps.ie</a></iframe></div><br /> -->
+
+	<div style="width: 100%"><iframe width="100%" height="200" src="http://www.maps.ie/create-google-map/map.php?width=100%&amp;height=200&amp;hl=en&amp;q=%20C-6%2F82%2C%20Chitrakoot%2C%20%20%20%20%20Vaishali%20Nagar%2C%20Jaipur%20%E2%80%93%20302021%20%20%20%20%20INDIA+(%20Vivacity%20InfoTech%20Pvt.%20Ltd.)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=A&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="http://www.mapsdirections.info/crear-un-mapa-de-google/">crear un mapa en google maps</a> by <a href="http://www.maps.ie/">Maps.ie</a></iframe></div><br />
+
+	<!-- <div style="width: 100%"><iframe width="100%" height="200" src="http://www.maps.ie/create-google-map/map.php?width=100%&amp;height=200&amp;hl=en&amp;q=%20C-6%2F82%2C%20Chitrakoot%2C%20%20%20%20%20Vaishali%20Nagar%2C%20Jaipur%20%E2%80%93%20302021%20%20%20%20%20INDIA+(%20Vivacity%20InfoTech%20Pvt.%20Ltd.)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=A&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="http://www.mapsdirections.info/crear-un-mapa-de-google/">crear un mapa en google maps</a> by <a href="http://www.maps.ie/">Maps.ie</a></iframe></div><br /> -->
+
+	</section>
+
+	<section id="contact-page" class="container">
+		<div class="row-fluid">
+
+		<!-- <div class="span8">
+				<h4>Contact Form</h4>
+				<div class="status alert alert-success" style="display: none"></div>
+
+				<form id="main-contact-form" class="contact-form" name="contact-form" method="post" action="sendemail.php">
+				  <div class="row-fluid">
+					<div class="span5">
+						<label>First Name</label>
+						<input type="text" class="input-block-level" required="required" placeholder="Your First Name">
+						<label>Last Name</label>
+						<input type="text" class="input-block-level" required="required" placeholder="Your Last Name">
+						<label>Email Address</label>
+						<input type="text" class="input-block-level" required="required" placeholder="Your email address">
+					</div>
+					<div class="span7">
+						<label>Message</label>
+						<textarea name="message" id="message" required="required" class="input-block-level" rows="8"></textarea>
+					</div>
+
+				</div>
+				<button type="submit" class="btn btn-primary btn-large pull-right">Send Message</button>
+				<p> </p>
+
+			</form>
+		</div> -->
+
+			<div class="span8">
+
+				<% if @page_top_banner.count > 0 %>
+
+					<div class="widget widget-popular">
+					<div class="widget-blog-items">
+						<% @page_top_banner.each do |banner| %>
+
+							<% if banner.ad_type == 'Text' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Banner' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+												<% if banner.link.present? %>
+													<%= link_to( image_tag(banner.banner), banner.link) %>
+												<% else %>
+													<%= image_tag(banner.banner) %>
+												<% end %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Google Ad' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">
+										<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+											<%= raw banner.google_add_js %>
+										</div>
+									</div>
+								</div>
+							<% end %>
+
+						<% end %>
+					</div>                        
+				</div>
+				
+				<% end %>
+
+				
+
+				<h4>Contact Form</h4>
+				<div class="status alert alert-success" style="display: none"></div>
+					<%= form_for(@contact, :id => "main-contact-form", :class => "contact-form") do |f| %>
+					  
+
+					  <div class="row-fluid">
+							<div class="span5">
+							  
+							    <%= f.label :first_Name %>
+							    <%= f.text_field :f_name, :placeholder => "Your First Name" %>
+							  
+							  
+							    <%= f.label :Last_Name %>
+							    <%= f.text_field :l_name, :placeholder => "Your Last Name" %>
+							  
+							  
+							    <%= f.label :email %>
+							    <%= f.text_field :email, :required => true, :pattern => '[^@]+@[^@]+\.[a-zA-Z]{2,6}', :placeholder => "Your email address" %>
+							  
+							</div>
+							<div class="span7">
+							  
+							    <%= f.label :message %>
+							    <%= f.text_area :message, :id => "message", :class =>"input-block-level", :rows => "8" %>
+							  
+							</div>
+						</div>
+					  <div class="actions">
+					  	<%= f.submit 'Send Message', :class => 'btn btn-primary btn-large pull-right' %>
+					   
+					  </div>
+					<% end %>
+
+					<br/>
+					<br/>
+
+					<div class="span12">
+
+						<!-- <div class="widget widget-popular"> -->
+							<div class="widget-blog-items">
+								<% @page_bottom_banner.each do |banner| %>
+
+									<% if banner.ad_type == 'Text' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">			
+												<!-- <div class=""> -->
+													<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+													</div>
+												<!-- </div> -->
+											</div>
+										</div>
+									<% end %>
+
+									<% if banner.ad_type == 'Banner' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">			
+												<!-- <div class=""> -->
+													<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+														<% if banner.link.present? %>
+															<%= link_to( image_tag(banner.banner), banner.link) %>
+														<% else %>
+															<%= image_tag(banner.banner) %>
+														<% end %>
+													</div>
+												<!-- </div> -->
+											</div>
+										</div>
+									<% end %>
+
+									<% if banner.ad_type == 'Google Ad' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">
+												<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+													<%= raw banner.google_add_js %>
+												</div>
+											</div>
+										</div>
+									<% end %>
+
+								<% end %>
+							</div>                        
+						<!-- </div> -->
+					</div>
+
+				
+		</div>
+
+		<div class="span3">
+			<h4>Our Address</h4>
+			<p>For any inquiry regarding our web services, products and training, please Contact Us.</p>
+			<p>
+				<i class="icon-map-marker pull-left"></i> Vivacity InfoTech Pvt. Ltd.<br>
+				C-6/82, Chitrakoot,
+    Vaishali Nagar, Jaipur – 302021
+    INDIA
+			</p>
+			<p>
+				<i class="icon-envelope"></i> &nbsp;contact@vivacityinfotech.com
+			</p>
+			<p>
+				<i class="icon-phone"></i> &nbsp;+91-141-2440803
+			</p>
+			<p>
+				<i class="icon-phone"></i> &nbsp;+91-93144-31546
+			</p>
+			<p>
+				<i class="icon-globe"></i> &nbsp;http://vivacityinfotech.com
+			</p>
+		</div>
+
+	</div>
+
+</section>
+
+<!--Bottom-->
+
+
+<!--  Login form -->
+<div class="modal hide fade in" id="loginForm" aria-hidden="false">
+	<div class="modal-header">
+		<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+		<h4>Login Form</h4>
+	</div>
+	<!--Modal Body-->
+	<div class="modal-body">
+		<form class="form-inline" action="index.html" method="post" id="form-login">
+			<input type="text" class="input-small" placeholder="Email">
+			<input type="password" class="input-small" placeholder="Password">
+			<label class="checkbox">
+				<input type="checkbox"> Remember me
+			</label>
+			<button type="submit" class="btn btn-primary">Sign in</button>
+		</form>
+		<a href="#">Forgot your password?</a>
+	</div>
+	<!--/Modal Body-->
+</div>
+<!--  /Login form -->

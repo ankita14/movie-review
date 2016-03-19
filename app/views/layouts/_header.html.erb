@@ -1,0 +1,41 @@
+<!--Header-->
+	<header class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<%= link_to image_tag("/assets/logo.png"), root_path, {:class => "pull-left", :id => "logo", :class => "logo_back" } %>
+				<div class="nav-collapse collapse pull-right">
+					<ul class="nav">
+						<li><%= nav_link "Home", root_path %></li>
+						<li><%= nav_link "Top Rated", movies_top_rated_movies_path %></li>
+						<li><%= nav_link "Latest", movies_latest_movies_path %></li>
+						<li><%= nav_link "Upcoming", movies_upcoming_movies_path %></li>
+						<li><%= nav_link "Contact Us", contact_path %></li>
+						<li><%= nav_link "About Us", home_about_path %></li>
+						<li class="login dropdown">
+							<% if user_signed_in? %>
+								<%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+							<% else %>
+								<%= link_to new_user_session_path do %>
+	    						<i class="icon-lock"></i>
+								<% end %>
+							<% end %>
+						</li>
+					</ul>        
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+	</header>
+
+	<style type="text/css">
+	.logo_back img{
+		height: 90px;
+	}
+	</style>
+	
+	<%#= @banners.where(:ad_type => 'Text').first.text %>
+	<!-- /header -->

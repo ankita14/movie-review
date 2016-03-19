@@ -1,0 +1,189 @@
+<%#= rails_admin_form_for @object, url: edit_path(@abstract_model, @object.id), as: @abstract_model.param_key, html: { method: "put", multipart: true, class: "form-horizontal denser", data: { title: @page_name } } do |form| %>
+  <%#= form.generate action: :update %>
+<%# end %>
+
+<% if params[:model_name] == 'movie' %>
+
+	<%= rails_admin_form_for @object, url: edit_path(@abstract_model, @object.id), as: @abstract_model.param_key, html: { method: "put", multipart: true, class: "form-horizontal denser btn_hide", data: { title: @page_name } } do |form| %>
+
+		<%= form.generate action: :update %>
+
+		<h2 >Critics Rating</h2>
+
+		<%#=  Movie.find(@object.id).critics_ratings.count %>
+
+		<% if Movie.find(@object.id).critics_ratings.count > 0 %>
+
+			<% i = 1 %>
+
+			<% Movie.find(@object.id).critics_ratings.each_with_index do |cr, index| %>
+				<% if index == 0 %>
+					<div id="address">	
+				<% else %>
+					<div id="address<%= index %>", class="clonedAddress" >
+				<% end %>
+
+					<%#= hidden_field_tag 'cr[id][]', cr.id %>
+
+					<div class="form-group control-group input", id="input<%= i%>" >
+						<%= label_tag 'Critic Name', nil, :class => "col-sm-2 control-label" %>
+						<div class="col-sm-10 controls">
+							<%= text_field_tag 'cr[title][]', cr.title, :autocomplete => :off,  :id => "title", :class => "form-control", :size => "50" %>
+						</div>
+					</div>
+
+					<div class="form-group control-group input", id="input<%= i+1 %>">
+						<%= label_tag 'Rating', nil, :class => "col-sm-2 control-label" %>
+						<div class="col-sm-10 controls">
+							<%= text_field_tag 'cr[rating][]', cr.rating, :autocomplete => :off, :id =>"rating", :class => "form-control", :size => "50", :type => "number", :step => '0.10', :max => "5.0", :min => "0.0" %>
+						</div>
+					</div>				
+
+					<div class="form-group control-group input", id="input<%= i+2 %>">
+						<%= label_tag 'Reviews', nil, :class => "col-sm-2 control-label" %>
+						<div class="col-sm-10 controls">
+							<%= text_area_tag 'cr[reviews][]', cr.reviews, :autocomplete => :off, :id =>"reviews", :class => "adjust_area" %>
+						</div>
+					</div>
+
+					<% if index == 0 %>
+						<% i = i + 2 %>
+					<% else %>
+						<% i = i + 3 %>
+					<% end %>
+
+					<a href="#" id="btnDel" class="deletethis">Delete </a>
+	    
+					
+				</div>		
+
+			<% end %>
+
+			<a href="#" id="btnAdd">Add more</a>
+
+		<% else %>
+
+			<div id="address">
+
+				<%#= hidden_field_tag 'cr[id][]', '' %>
+
+				<div class="form-group control-group input", id="input1" >
+					<%= label_tag 'Critic Name', nil, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10 controls">
+						<%= text_field_tag 'cr[title][]', nil, :autocomplete => :off,  :id => "title", :class => "form-control", :size => "50" %>
+					</div>
+				</div>
+
+				<div class="form-group control-group input", id="input2">
+					<%= label_tag 'Rating', nil, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10 controls">
+						<%= text_field_tag 'cr[rating][]', nil, :autocomplete => :off, :id =>"rating", :class => "form-control", :size => "50", :type => "number", :step => '0.10', :max => "5.0", :min => "0.0" %>
+					</div>
+				</div>
+
+				<div class="form-group control-group input", id="input3">
+					<%= label_tag 'Reviews', nil, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10 controls">
+						<%= text_area_tag 'cr[reviews][]', nil, :autocomplete => :off, :id =>"reviews", :class => "adjust_area" %>
+					</div>
+				</div>
+
+				<a href="#" id="btnDel">Delete </a>
+    			
+			</div>		
+
+			<a href="#" id="btnAdd">Add more</a>
+
+		<% end %>
+		
+		<div class="col-sm-offset-2 col-sm-10">
+			<%= form.submit 'Update', :class => 'btn btn-primary'%>
+		</div>
+	<% end %>
+ 
+<% else %>
+
+	<%= rails_admin_form_for @object, url: edit_path(@abstract_model, @object.id), as: @abstract_model.param_key, html: { method: "put", multipart: true, class: "form-horizontal denser", data: { title: @page_name } } do |form| %>
+	  <%= form.generate action: :update %>
+	<% end %>
+
+<% end %>
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+
+		// alert("test");
+    $('#btnAdd').click(function(e) {
+    	e.preventDefault();
+    		
+        var $address = $('#address');
+        var num = $('.clonedAddress').length; // there are 5 children inside each address so the prevCloned address * 5 + original
+        var newNum = new Number(num + 1);
+        var newElem = $address.clone().attr('id', 'address' + newNum).addClass('clonedAddress');
+        
+        //set all div id's and the input id's
+        newElem.children('div').each (function (i) {
+            this.id = 'input' + (newNum*3 + i);
+        });
+        
+        newElem.find('input').each (function () {
+            // this.id = this.id + newNum;
+            // this.name = this.name + newNum;
+            this.value = ''
+        });
+         newElem.find('textarea').each (function () {
+            // this.id = this.id + newNum;
+            // this.name = this.name + newNum;
+            this.value = ''
+        });
+         
+        if (num > 0) {
+            $('.clonedAddress:last').after(newElem);
+        } else {
+            $address.after(newElem);
+        }
+            
+
+        // $('#btnDel').removeAttr('disabled');
+         $('#btnDel').css('cursor','pointer');
+
+            
+        if (newNum == 3) $('#btnAdd').attr('disabled', 'disabled');
+    });
+    // $('#btnDel').click(function(e) {
+    // 	alert("cool");
+    // 	    	e.preventDefault();
+
+    //     $('.clonedAddress:last').remove();
+    //     $('#btnAdd').removeAttr('disabled');
+    //     if ($('.clonedAddress').length == 0) {
+    //         // $('#btnDel').attr('disabled', 'disabled');
+    //         $('#btnDel').css('cursor','not-allowed');
+    //     }
+    // });
+$('.deletethis').bind( "click", function( e ) {
+	e.preventDefault();
+	$(this).closest('.clonedAddress').remove();
+});
+
+// $(".deletethis").bind( "click", function( e ) {
+//     alert("The paragraph was clicked.");
+// });
+
+
+    // $('#btnDel').attr('disabled', 'disabled');
+    // $('#btnDel').css('cursor','not-allowed');
+});
+</script>
+
+<style type="text/css">
+	.btn_hide .form-group.form-actions {
+    display: none;
+	}
+	.adjust_area {
+	  height: 157px;
+    width: 416px !important;
+	}
+	}
+</style>

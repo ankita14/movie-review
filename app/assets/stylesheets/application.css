@@ -1,0 +1,130 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+  .blog-meta a , .widget-blog-items a, .blog-item a, .row-fluid a  {
+		color: #2dcc70;
+		text-decoration: none;
+	}
+
+	.blog-meta a:hover , .widget-blog-items a:hover, .row-fluid a:hover, .blog-item a:hover  {
+		color: #005580;
+		background-color: #fff;
+	}
+
+	.blog-meta a:focus , .widget-blog-items a:focus, .row-fluid a:focus, .blog-item a:focus  {
+		color: #005580;
+		background-color: #fff;
+	}
+
+	#bottom li.active a {
+	color: #2dcc70 !important;
+	}
+
+	/*.icon-film, .icon-thumbs-up, .icon-user, .icon-star, .icon-fire{
+		margin-right: 8px !important;
+	}*/
+
+	.icon-film {
+    margin-right: 12px !important;
+	}
+
+	.hgt {
+    color: green;
+    line-height: 30px;
+    margin-top: 15px;
+    margin-right: 68px;
+    margin-top: 15px;
+	}
+
+	
+	.embed-container {
+	  position: relative;
+	  padding-bottom: 56.25%;
+	  padding-top: 30px;
+	  height: 0;
+	  overflow: hidden;
+	  width: 100%;
+	  height: auto;
+	  margin-bottom: 12px;
+	} 
+
+	.embed-container iframe,
+	.embed-container object,
+	.embed-container embed {
+	  position: absolute;
+	  top: 0; left: 0;
+	  width: 100%;
+	  height: 100%;
+	} 
+
+	.msgs {
+		margin-top: 25px !important;
+	}
+
+	/*ul.gallery li .preview .overlay {
+    background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transition: opacity 300ms ease 0s;
+    width: 100%;
+	}*/
+
+	ul.gallery li .preview {
+    display: block;
+    margin: 15px;
+    min-height: 163px;
+    position: relative;
+	}
+
+	.indent {
+		line-height: 24px !important;
+	}
+
+	.preview img {
+    height: 160px;
+    width: 268px;
+	}
+
+	section.container {
+    min-height: 590px;
+	}
+
+.search_btn {
+	position: relative;
+  left: 290px;
+  top: 11px;
+	}
+
+.search_box {
+	position: absolute;
+  width: 29%;
+	}
+
+.btn_text {
+	color: #fff !important;
+}
+
+.btn_text:hover {
+    background-color: #24a259 !important;
+}
+
+a.mov_link:hover {
+	background-color: #fff !important;
+  color: #000 !important;
+}

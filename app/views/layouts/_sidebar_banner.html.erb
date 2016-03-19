@@ -1,0 +1,42 @@
+<div class="widget widget-popular">
+	<div class="widget-blog-items">
+		<% @sidebar_banners.each do |banner| %>
+			<% if banner.ad_type == 'Text' %>
+				<div class="widget-blog-item media">					
+					<div class="media-body">			
+						<!-- <div class=""> -->
+							<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+							</div>
+						<!-- </div> -->
+					</div>
+				</div>
+			<% end %>
+
+			<% if banner.ad_type == 'Banner' %>
+				<div class="widget-blog-item media">					
+					<div class="media-body">			
+						<!-- <div class=""> -->
+							<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+								<% if banner.link.present? %>
+									<%= link_to( image_tag(banner.banner), banner.link) %>
+								<% else %>
+									<%= image_tag(banner.banner) %>
+								<% end %>
+							</div>
+						<!-- </div> -->
+					</div>
+				</div>
+			<% end %>
+
+			<% if banner.ad_type == 'Google Ad' %>
+				<div class="widget-blog-item media">					
+					<div class="media-body">
+						<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+							<%= raw banner.google_add_js %>
+						</div>
+					</div>
+				</div>
+			<% end %>
+		<% end %>
+	</div>                        
+</div>

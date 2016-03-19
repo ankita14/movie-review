@@ -1,0 +1,29 @@
+
+<div class="widget">
+	<h3>Browse by Types</h3>
+	<div>
+		<div class="row-fluid">
+			<% @total_types = @movie_types.count/2.0 %>
+			<% @span1 = @total_types.ceil %>
+			<% @span2 = @total_types.floor %>
+			<% @span1_type = @movie_types.first(@span1) %>
+			<% @span2_type = @movie_types.last(@span2) %>
+
+				<div class="span6">
+						<ul class="unstyled">
+							<% @span1_type.each do |type| %>
+								<li><%= link_to type.title, type_with_title_path(type) %></li>                     
+							<% end %>
+						</ul>
+				</div>
+
+				<div class="span6">
+						<ul class="unstyled">
+							<% @span2_type.each do |type| %>
+								<li><%= link_to type.title, type_with_title_path(type) %></li>                     
+							<% end %>
+						</ul>
+				</div>			
+		</div>
+	</div>                       
+</div>

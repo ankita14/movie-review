@@ -1,0 +1,312 @@
+<% if params[:fetched].present? %>
+	<% m = Mechanize.new %>
+	<% @v = m.get(params[:fetched]) %>
+	<% debug @v.inspect  %>
+
+	<% keyval = Array.new %>
+	<% producers = Array.new %>
+	<% stars = Array.new %>
+	<% directors = Array.new %>
+
+	<% if @v.present? %>
+
+		<% @v.xpath("//ul[@class='mtmb15']").each_with_index do |ul,i| %>
+			<%  ul.xpath("./*[@class='mtaa00  mtalignlft']").each_with_index do |pi,gi| %>
+					<% if i > 1 && i < 4 %>
+						<% keyval[i] = pi.text %>
+						<% keyval.push %>
+					<% end %>
+
+					<% if i == 4 %>
+						<% producers[gi] = pi.xpath('xmlns|a').text %>
+						<% producers.push %>
+					<% end %>
+					
+				<%end%>
+		<% end %>
+
+
+		<% @v.xpath("//ul[@class='mtmb15 mtmb15']").each_with_index do |ul,i| %>
+
+			<%  ul.xpath("./*[@class='mtaa00  mtalignlft']").each_with_index do |pi,gi| %>
+
+				<% if i == 0 %>
+					<% stars[gi] = pi.xpath('xmlns|a').text %>
+					<% stars.push %>        
+
+				<% end %>
+
+			<% end %>
+
+		<% end %>
+
+
+		<% @v.xpath("//div[@class='mtfl mtoverflow castrtcol']").each_with_index do |div,ii| %>
+
+			<%  div.xpath("//ul[@class='moviemicr-cast']").each_with_index do |pi,gi| %>
+				
+				<% if gi > -1 && gi < 2 %>
+				
+					<% directors[gi] = pi.xpath('xmlns|li').text %>
+					<% directors.push %>
+					
+				<% end %>
+
+			<% end %>
+
+		<% end %>
+
+		<% d = Date.parse(keyval[2]) %>
+		<% @release_date = d.to_formatted_s(:long)  %>
+
+	<% end %>
+
+
+	<%= rails_admin_form_for @object, url: new_path(model_name: @abstract_model.to_param), as: @abstract_model.param_key, html: { multipart: true, class: "form-horizontal denser", data: { title: @page_name } } do |f| %>
+
+
+	<%#= form_for("/admin/movie/new", :html => {:class => 'form-horizontal denser'}) do |f| %>
+
+
+		<div class="form-group control-group">
+			<%= f.label :title, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.text_field :title, :class => "form-control", :size => "50", :value => @v.at('div.iw_fff h1').text %>
+			</div>
+		</div>
+
+		<div class="form-group control-group">   
+			<%= f.label :description, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<% if(@v.at('div#descprev').present?) %>
+					<%= f.text_area :description, :value => @v.at('div#descprev').text.strip, :class => 'ckeditor' %>
+				<% else %>
+					<%= f.text_area :description, :class => 'ckeditor' %>
+				<% end %>
+			</div>
+		</div>
+
+		<div class="form-group control-group">   
+			<%= f.label :movie_reviews, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.text_area :movie_reviews, as: :ckeditor %>
+			</div>
+		</div> 
+
+		<div class="form-group control-group">
+			<%= f.label :genres, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.text_field :genres, :class => "form-control", :size => "50", :value => keyval[3] %>
+			</div>
+		</div>
+
+		<div class="form-group control-group">
+			<%= f.label :movie_type, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.text_field :movie_type, :class => "form-control", :size => "50" %>
+			</div>
+		</div>
+
+		<div class="form-group control-group">
+			<%= f.label :director, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.text_field :director, :class => "form-control", :size => "50", :value => directors[1] %>
+			</div>
+		</div>
+		
+		<div class="form-group control-group">
+			<%= f.label :producer, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.text_field :producer, :class => "form-control", :size => "50", :value => producers %>
+			</div>
+		</div>
+ 
+		<div class="form-group control-group">
+			<%= f.label :music_director, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.text_field :music_director, :class => "form-control", :size => "50", :value => directors[0] %>
+			</div>
+		</div>
+
+		<div class="form-group control-group">
+			<%= f.label :star_cast, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.text_field :star_cast, :class => "form-control", :size => "50", :value => stars %>
+			</div>
+		</div>
+
+		<div class="form-group control-group">
+			<%= f.label :release_date, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.date_field :release_date, :class => "form-control", :size => "50", :value => @release_date %>
+			</div>
+		</div>
+
+		<div class="form-group control-group">
+			<%= f.label :movie_length, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.text_field :movie_length, :class => "form-control", :size => "50" %>
+			</div>
+		</div>
+
+		<div class="form-group control-group">
+			<%= f.label :rating, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.text_field :rating, :class => "form-control", :size => "50" %>
+			</div>
+		</div>
+
+		<div class="form-group control-group">
+			<%= f.label :youtube_url, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.text_field :youtube_url, :class => "form-control", :size => "50" %>
+			</div>
+		</div>
+
+		<div class="form-group control-group">
+			<%= f.label :image, :class => "col-sm-2 control-label" %>
+			<div class="col-sm-10 controls">
+				<%= f.file_field :image %>
+			</div>
+		</div>
+
+		<!-- <button class="btn btn-primary" type="submit" name="_save" data-disable-with="Save"> -->
+
+		<div class="form-group form-actions">
+			<div class="col-sm-offset-2 col-sm-10">
+				<%#= f.generate action: :create, :class => 'btn btn-primary' %>
+				<%= f.submit 'Save', :class => 'btn btn-primary'%>
+			</div>
+		</div>
+	<% end %>
+
+<% elsif params[:model_name] == 'movie' %>
+
+	<%= rails_admin_form_for @object, url: new_path(model_name: @abstract_model.to_param), as: @abstract_model.param_key, html: { multipart: true, class: "form-horizontal denser btn_hide", data: { title: @page_name } } do |form| %>
+
+		<%= form.generate action: :create %>
+
+		<h2 >Critics Rating</h2>
+			
+			<div id="address">
+
+				<div class="form-group control-group input", id="input1" >
+					<%= label_tag 'Critic Name', nil, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10 controls">
+						<%= text_field_tag 'cr[title][]', nil, :autocomplete => :off,  :id => "title", :class => "form-control", :size => "50" %>
+					</div>
+				</div>
+
+				<div class="form-group control-group input", id="input2">
+					<%= label_tag 'Rating', nil, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10 controls">
+						<%= text_field_tag 'cr[rating][]', nil, :autocomplete => :off, :id =>"rating", :class => "form-control", :size => "50", :type => "number", :step => '0.10', :max => "5.0", :min => "0.0" %>
+					</div>
+				</div>
+
+				<div class="form-group control-group input", id="input3">
+					<%= label_tag 'Reviews', nil, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10 controls">
+						<%= text_area_tag 'cr[reviews][]', nil, :autocomplete => :off, :id =>"reviews", :class => "adjust_area" %>
+					</div>
+				</div>
+
+				<a href="#" id="btnDel">Delete </a>
+    
+				
+			</div>		
+
+			<a href="#" id="btnAdd">Add more</a>
+			
+
+		<!-- <button class="btn btn-primary" type="submit" name="_save" data-disable-with="Save"> -->
+
+		<!-- <div class="form-group form-actions"> -->
+			<div class="col-sm-offset-2 col-sm-10">
+				<%#= f.generate action: :create, :class => 'btn btn-primary' %>
+				<%= form.submit 'Save', :class => 'btn btn-primary'%>
+			</div>
+		<!-- </div> -->
+	<% end %>
+ 
+<% else %>
+
+	<%= rails_admin_form_for @object, url: new_path(model_name: @abstract_model.to_param), as: @abstract_model.param_key, html: { multipart: true, class: "form-horizontal denser", data: { title: @page_name } } do |form| %>
+		<%= form.generate action: :create %>
+	<% end %>
+
+<% end %>
+
+<script type="text/javascript">
+
+	var search = 'Required. ';
+	// $(document).ready(function () {
+	//     $("span:contains('"+search+"')").each(function () {
+	//         var regex = new RegExp(search,'gi');
+	//         $(this).html($(this).text().replace(regex, "<span class='red'>"+search+"</span>"));
+	//     });
+	// });
+	$(document).ready(function() {
+		$("span:contains('"+search+"')").each(function () {
+	        var regex = new RegExp(search,'gi');
+	        $(this).html($(this).text().replace(regex, "<span style='color:red;'>"+search+"*</span>"));
+	    });
+
+		// alert("hiiii");
+    $('#btnAdd').click(function(e) {
+    	e.preventDefault();
+        var $address = $('#address');
+        var num = $('.clonedAddress').length; // there are 5 children inside each address so the prevCloned address * 5 + original
+        var newNum = new Number(num + 1);
+        var newElem = $address.clone().attr('id', 'address' + newNum).addClass('clonedAddress');
+        
+        //set all div id's and the input id's
+        newElem.children('div').each (function (i) {
+            this.id = 'input' + (newNum*3 + i);
+        });
+        
+        newElem.find('input').each (function () {
+            // this.id = this.id + newNum;
+            // this.name = this.name + newNum;
+            this.value = ''
+        });
+         
+        if (num > 0) {
+            $('.clonedAddress:last').after(newElem);
+        } else {
+            $address.after(newElem);
+        }
+            
+
+        // $('#btnDel').removeAttr('disabled');
+         $('#btnDel').css('cursor','pointer');
+
+            
+        if (newNum == 3) $('#btnAdd').attr('disabled', 'disabled');
+    });
+    $('#btnDel').click(function(e) {
+    	    	e.preventDefault();
+
+        $('.clonedAddress:last').remove();
+        $('#btnAdd').removeAttr('disabled');
+        if ($('.clonedAddress').length == 0) {
+            // $('#btnDel').attr('disabled', 'disabled');
+            $('#btnDel').css('cursor','not-allowed');
+        }
+    });
+    // $('#btnDel').attr('disabled', 'disabled');
+    $('#btnDel').css('cursor','not-allowed');
+});
+</script>
+
+<style type="text/css">
+	.btn_hide .form-group.form-actions {
+    display: none;
+	}
+	.adjust_area {
+	  height: 157px;
+    width: 416px !important;
+	}
+	}
+
+</style>

@@ -1,0 +1,210 @@
+<body>
+	<section class="title">
+		<div class="container">
+			<div class="row-fluid">
+				<div class="span6">
+					 <h1>Latest Movies</h1>
+				</div>
+				<div class="span6">
+					<ul class="breadcrumb pull-right">
+						<li><a href="/">Home</a> <span class="divider">/</span></li>
+						<li class="active">Latest Movies</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+		<!-- / .title -->         
+
+<section id="about-us" class="container main">
+	<div class="row-fluid">
+			<div class="span8">
+					<div class="blog">
+						<div class="widget widget-popular">
+							<div class="widget-blog-items">
+								<% @latest_top_banner.each do |banner| %>
+								
+									<% if banner.ad_type == 'Text' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">			
+												<!-- <div class=""> -->
+													<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+													</div>
+												<!-- </div> -->
+											</div>
+										</div>
+									<% end %>
+
+									<% if banner.ad_type == 'Banner' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">			
+												<!-- <div class=""> -->
+													<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+														<% if banner.link.present? %>
+															<%= link_to( image_tag(banner.banner), banner.link) %>
+														<% else %>
+															<%= image_tag(banner.banner) %>
+														<% end %>
+													</div>
+												<!-- </div> -->
+											</div>
+										</div>
+									<% end %>
+
+									<% if banner.ad_type == 'Google Ad' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">
+												<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+													<%= raw banner.google_add_js %>
+												</div>
+											</div>
+										</div>
+									<% end %>
+								<% end %>
+							</div>                        
+						</div>
+
+									<% @latest.each do |movie| %>
+
+										<% @average_cr_rating = 0.0 %>
+
+										<% if movie.critics_ratings.count > 0 %>
+											<% critics_count = movie.critics_ratings.count %>
+											<% cr_rating = 0 %>
+											<% movie.critics_ratings.each do |cr| %>
+												<% cr_rating = cr_rating + cr.rating %>
+											<%  end %>
+
+											<% @average_cr_rating = cr_rating/critics_count %>
+										<% end %> 
+
+										<script type="text/javascript">
+											$(function(){
+												$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+														$('.movie_rating-<%= movie.id %>').raty({ score: <%= @average_cr_rating %>,
+												  	readOnly: true,
+											    	path: '/assets'
+													});
+												})
+											})
+										</script>	
+
+										<div class="blog-item well">
+												<h2 class="movie_rating-<%= movie.id %>" ><%#= link_to blog.title, welcome_blog_item_path(blog.id) %>
+												<%= link_to movie.title, movie_with_title_path(movie) %>
+												</h2>
+												<!-- <a href="#"><h2><%#= blog.title %></h2></a> -->
+												<div class="blog-meta clearfix">
+													<p class="pull-left">
+													  <i class="icon-folder-close"></i> 
+													  <% if movie.genres.present? %>
+													  <% movie.genres.each do |genre| %>
+													  	<%= link_to genre.title, genre_with_title_path(genre) %> | 
+													  	 
+													  <% end %>
+													  <i class="icon-folder-close"></i>
+													  <% end %>
+													  <% if movie.movie_type %> 
+													  	<%= link_to movie.movie_type.title, type_with_title_path(movie.movie_type) %> | <i class="icon-calendar"></i> <%= movie.release_date.strftime("%b %dth, %Y") %>
+													  <% end %>
+												  </p>
+													<p class="pull-right"><i class="icon-comment pull"></i> <%= movie.reviews.count %> <% if movie.reviews.count < 2 %> Review <% else %> Reviews <% end %></p>
+												</div>
+											<p>
+												<% if movie.image.present? %>
+													<%= image_tag(movie.image.indexThumb.url) %>
+												<% else %>
+													<%= image_tag("/assets/not_available.jpg") %>
+												<% end %>        
+											</p>
+											
+											<p><%= movie.description.html_safe %></p>
+											<%= link_to 'Read More', movie_with_title_path(movie) %>
+
+											<%#= link_to 'Read More', welcome_blog_item_path(:blog => blog.id), :class => 'read' %> <i class="icon-angle-right"></i>
+											<!-- <a class="btn btn-link" href="#">Read More</a> -->
+
+											<p>
+												<%#= blog.categories %>
+											</p>
+
+									</div>
+									<% end %>
+
+							<div class="widget widget-popular">
+								<div class="widget-blog-items">
+									
+								</div>                        
+							</div>
+
+
+							<div class="widget widget-popular">
+								<div class="widget-blog-items">
+									<% @latest_bottom_banner.each do |banner| %>
+									
+										<% if banner.ad_type == 'Text' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Banner' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+												<% if banner.link.present? %>
+													<%= link_to( image_tag(banner.banner), banner.link) %>
+												<% else %>
+													<%= image_tag(banner.banner) %>
+												<% end %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Google Ad' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">
+										<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+											<%= raw banner.google_add_js %>
+										</div>
+									</div>
+								</div>
+							<% end %>
+
+									<% end %>
+								</div>                        
+							</div>
+									
+
+									<!-- End Blog Item -->
+							<div class="gap"></div>
+
+							<!-- Paginationa -->
+							<div class="pagination">
+								<%#= will_paginate @category_posts %>
+							</div>
+
+
+				</div>
+		</div>
+		<aside class="span4">
+			<%= render "layouts/top_rated" %>
+			<%= render "layouts/genres" %>			
+			<%#= render "layouts/movietype" %>
+			<%= render "layouts/sidebar_banner" %>			
+		</div> 				
+		</aside>
+</div>
+
+</section>
+
+</body>
+</html>

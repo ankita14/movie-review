@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% if controller.controller_name == "home" && controller.action_name == "movie_detail" %>
+  <% @desc = truncate(@movie.description, :length => 70, :omission => "" , :escape => false) %>
+    <title><%= @movie.title %></title>
+    <meta name="keywords" content="Movie Reviews, Vivacity Infotech, <%= @movie.star_cast %>, <%= @movie.movie_type.title %>, <% @movie.genres.each do |genre| %> <%= genre.title %> <% end %>"/>
+    <meta name="description" content="<%= description(@movie.description) %>"/>
+  <% else %>
+    <title>MovieReview</title>
+  <% end %>
+  <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+	<% if devise_controller? && resource_name == :admin && action_name == 'new' %>
+    <!-- <div class="container"> -->
+      <% flash.each do |key, value| %>
+        <div class="msgs alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+    <!-- </div> -->
+		<%= yield %>
+	<% else %>
+    
+		<%= render 'layouts/header' %>
+
+		<!-- <div class="container"> -->
+      <% flash.each do |key, value| %>
+        <div class="msgs alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+    <!-- </div> -->
+
+      <%= yield %>
+      <%= render 'layouts/footer' %>
+      <%#= debug(params) if Rails.env.development? %>
+
+
+		<%#= yield %>
+		<%#= render 'layouts/footer' %>
+	<% end %>
+
+</body>
+
+</html>
+
