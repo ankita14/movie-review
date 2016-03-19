@@ -2,7 +2,7 @@
 <html>
 <head>
   <% if controller.controller_name == "home" && controller.action_name == "movie_detail" %>
-  <% @desc = truncate(@movie.description, :length => 70, :omission => "" , :escape => false) %>
+  
     <title><%= @movie.title %></title>
     <meta name="keywords" content="Movie Reviews, Vivacity Infotech, <%= @movie.star_cast %>, <%= @movie.movie_type.title %>, <% @movie.genres.each do |genre| %> <%= genre.title %> <% end %>"/>
     <meta name="description" content="<%= description(@movie.description) %>"/>
