@@ -1,3 +1,4 @@
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <% if @search_results %>
 	<%#= @movies.inspect %>
 	<section class="title">
@@ -98,8 +99,6 @@
 				</div>
 					
 					<% @movies.each do |movie| %>
-
-						
 
 						<% if movie.release_date.present? %>
 							<% unless movie.release_date.future? %>
