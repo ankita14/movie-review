@@ -4,7 +4,7 @@
   <% if controller.controller_name == "home" && controller.action_name == "movie_detail" %>
   
     <title><%= @movie.title %></title>
-    <meta name="keywords" content="Movie Reviews, Vivacity Infotech, <%= @movie.star_cast %>, <%= @movie.movie_type.title %>, <% @movie.genres.each do |genre| %> <%= genre.title %> <% end %>"/>
+    <meta name="keywords" content="Movie Reviews, Vivacity Infotech, <%= @movie.star_cast %> <% if @movie.movie_type %>, <%= @movie.movie_type.title %> <% end %> <% if @movie.genres %> , <% @movie.genres.each do |genre| %> <%= genre.title %> <% end %> <% end %>"/>
     <meta name="description" content="<%= description(@movie.description) %>"/>
   <% else %>
     <title>MovieReview</title>
