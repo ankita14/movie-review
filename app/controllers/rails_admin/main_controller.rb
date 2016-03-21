@@ -117,6 +117,8 @@ module RailsAdmin
 				i = 0
 				supplies = []
 
+				puts @@crvalues
+
 				unless @@crvalues[:title].blank?
 			
 					cr_count =  @@crvalues[:title].length
@@ -154,22 +156,35 @@ module RailsAdmin
 					end	
 				end
 
-				av_cr_rating = Movie.find(@object.id).critics_ratings
 				movie = Movie.find(@object.id)
-				@average_cr_rating = 0.0
-				cr_rating = 0.0
+				if movie.critics_ratings.count > 0
 
-				av_cr_rating.each do |cr|
-				
-					if av_cr_rating.count > 0
-						critics_count = av_cr_rating.count	
-						cr_rating = cr_rating + cr.rating					
+					av_cr_rating = movie.critics_ratings
+					
+					@average_cr_rating = 0.0
+					cr_rating = 0.0
+					critics_count = 0
+
+					av_cr_rating.each do |cr|
+						if cr.title.blank?
+							cr.delete
+						end
+					
+						if movie.critics_ratings.count > 0
+							critics_count = movie.critics_ratings.count	
+							cr_rating = cr_rating + cr.rating					
+						end
+						
 					end
+
 					@average_cr_rating = cr_rating/critics_count	
 					movie.update_attributes(:rating => @average_cr_rating)
+
+					puts @average_cr_rating
+
 				end
 
-				puts @average_cr_rating
+		
 
 			  puts "gere==========="
 				# puts "#{@action.key}"
