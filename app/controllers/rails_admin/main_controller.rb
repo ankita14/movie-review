@@ -117,7 +117,7 @@ module RailsAdmin
 				i = 0
 				supplies = []
 
-				if @@crvalues[:title].blank?
+				unless @@crvalues[:title].blank?
 			
 					cr_count =  @@crvalues[:title].length
 					

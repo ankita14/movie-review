@@ -170,6 +170,38 @@
 			</div>
 		</div>
 
+		<h2 >Critics Rating</h2>
+			
+			<div id="address">
+
+				<div class="form-group control-group input", id="input1" >
+					<%= label_tag 'Critic Name', nil, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10 controls">
+						<%= text_field_tag 'cr[title][]', nil, :autocomplete => :off,  :id => "title", :class => "form-control", :size => "50" %>
+					</div>
+				</div>
+
+				<div class="form-group control-group input", id="input2">
+					<%= label_tag 'Rating', nil, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10 controls">
+						<%= text_field_tag 'cr[rating][]', nil, :autocomplete => :off, :id =>"rating", :class => "form-control", :size => "50", :type => "number", :step => '0.10', :max => "5.0", :min => "0.0" %>
+					</div>
+				</div>
+
+				<div class="form-group control-group input", id="input3">
+					<%= label_tag 'Reviews', nil, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10 controls">
+						<%= text_area_tag 'cr[reviews][]', nil, :autocomplete => :off, :id =>"reviews", :class => "adjust_area" %>
+					</div>
+				</div>
+
+				<a href="#" id="btnDel">Delete </a>
+    
+				
+			</div>		
+
+			<a href="#" id="btnAdd">Add more</a>
+
 		<!-- <button class="btn btn-primary" type="submit" name="_save" data-disable-with="Save"> -->
 
 		<div class="form-group form-actions">
