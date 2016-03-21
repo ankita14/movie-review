@@ -68,7 +68,7 @@
 			</div>			
 		<%# end %>
 	</div>                        
-</div> -->
+</div> --> 
 
 <div class="widget widget-popular">
 	<h3>Upcoming Movies</h3>
@@ -84,7 +84,13 @@
 				<div class="media-body">
 
 					<!-- <h5> -->
-					<%= link_to image_tag(movie.image.thumb.url), movie_with_title_path(movie) %>
+
+					<% if movie.image.present? %>
+						<%= link_to image_tag(movie.image.thumb.url), movie_with_title_path(movie) %>
+					<% else %>
+						<%= link_to image_tag("/assets/not_available.jpg") %>
+					<% end %>   
+					
 					<%#= link_to movie.title, movie_with_title_path(movie) %>
 					<!-- </h5> -->
 				</div>
