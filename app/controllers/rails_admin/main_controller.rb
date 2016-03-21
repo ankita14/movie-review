@@ -154,6 +154,23 @@ module RailsAdmin
 					end	
 				end
 
+				av_cr_rating = Movie.find(@object.id).critics_ratings
+				movie = Movie.find(@object.id)
+				@average_cr_rating = 0.0
+				cr_rating = 0.0
+
+				av_cr_rating.each do |cr|
+				
+					if av_cr_rating.count > 0
+						critics_count = av_cr_rating.count	
+						cr_rating = cr_rating + cr.rating					
+					end
+					@average_cr_rating = cr_rating/critics_count	
+					movie.update_attributes(:rating => @average_cr_rating)
+				end
+
+				puts @average_cr_rating
+
 			  puts "gere==========="
 				# puts "#{@action.key}"
 			end                            
@@ -221,6 +238,23 @@ module RailsAdmin
 					# 	end
 					# end
 				end
+
+				av_cr_rating = Movie.find(@object.id).critics_ratings
+
+				@average_cr_rating = 0.0
+				cr_rating = 0.0
+
+				av_cr_rating.each do |cr|
+				
+					if av_cr_rating.count > 0
+						critics_count = av_cr_rating.count	
+						cr_rating = cr_rating + cr.rating					
+					end
+					@average_cr_rating = cr_rating/critics_count	
+					movie.update_attributes(:rating => @average_cr_rating)
+				end
+
+				puts @average_cr_rating
 
 				puts "////////////"
 

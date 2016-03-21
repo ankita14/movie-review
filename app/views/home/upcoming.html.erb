@@ -20,16 +20,7 @@
 		<ul class="gallery col-4">
 			<% @upcoming.each do |movie| %>
 
-					<script type="text/javascript">
-						$(function(){
-							$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
-									$('.movie_rating-<%= movie.id %>').raty({ score: <%= movie.rating %>,
-							  	readOnly: true,
-						    	path: '/assets'
-								});
-							})
-						})
-					</script>
+					
 
 				<li>
 					<div class="preview">
@@ -47,8 +38,8 @@
 					<div class="desc">
 						<h5><%= link_to movie.title, movie_with_title_path(movie), :class => "mov_link" %></h5>
 						<small class="movie_rating-<%= movie.id %>">
-							<!-- <h2 class="movie_rating-<%= movie.id %>" > -->
-							<p class="pull-right indent"><% if movie.release_date %>
+							<!-- <h2 class="movie_rating-<%= movie.id %>" > --> 
+							<p class="indent"><% if movie.release_date %>
 								<i class="icon-calendar"></i> <%= movie.release_date.strftime("%b %dth, %Y") %>
 							<% end %></p>
 						</small>

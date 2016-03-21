@@ -18,22 +18,11 @@
 <section id="portfolio" class="container main">    
 		<ul class="gallery col-4">
 			<% @latest.each do |movie| %>
-				<% @average_cr_rating = 0.0 %>
-
-					<% if movie.critics_ratings.count > 0 %>
-						<% critics_count = movie.critics_ratings.count %>
-						<% cr_rating = 0 %>
-						<% movie.critics_ratings.each do |cr| %>
-							<% cr_rating = cr_rating + cr.rating %>
-						<%  end %>
-
-						<% @average_cr_rating = cr_rating/critics_count %>
-					<% end %> 
 
 					<script type="text/javascript">
 						$(function(){
 							$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
-									$('.movie_rating-<%= movie.id %>').raty({ score: <%= @average_cr_rating %>,
+									$('.movie_rating-<%= movie.id %>').raty({ score: <%= movie.rating %>,
 							  	readOnly: true,
 						    	path: '/assets'
 								});

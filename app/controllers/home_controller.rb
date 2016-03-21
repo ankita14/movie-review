@@ -50,19 +50,6 @@ class HomeController < ApplicationController
 	end
 
 	def top_rated
-		@top_movies.each do |movie|
-			@average_cr_rating = 0.0
-			if movie.critics_ratings.count > 0
-				critics_count = movie.critics_ratings.count
-				cr_rating = 0
-				movie.critics_ratings.each do |cr|
-					cr_rating = cr_rating + cr.rating
-				end
-				@average_cr_rating = cr_rating/critics_count	
-				movie.update_attributes(:rating => @average_cr_rating)
-			end
-		end
-
 		@top_rated_movies = Movie.in_last_six_months.order(rating: :desc)
 		@top_rated_top_banner = Banner.where(:position => 'Top Rated Top').order(:order)
 		@top_rated_bottom_banner = Banner.where(:position => 'Top Rated Bottom').order(:order)
