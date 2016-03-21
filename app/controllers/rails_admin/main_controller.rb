@@ -240,6 +240,7 @@ module RailsAdmin
 				end
 
 				av_cr_rating = Movie.find(@object.id).critics_ratings
+				movie = Movie.find(@object.id)
 
 				@average_cr_rating = 0.0
 				cr_rating = 0.0
