@@ -6,13 +6,6 @@ class Movie < ActiveRecord::Base
 	scope :in_last_six_months, -> {
 		where(:release_date => 6.months.ago..Date.today)
 	}
-
-	before_save :default_values
-  def default_values
-  	if rating.blank?
-    	self.rating = 0.0
-    end
-  end
 	
 	friendly_id :title, :use => [:slugged, :finders]
 	mount_uploader :image, ImageUploader

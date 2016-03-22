@@ -178,7 +178,11 @@ module RailsAdmin
 					end
 
 					@average_cr_rating = cr_rating/critics_count	
-					movie.update_attributes(:rating => @average_cr_rating)
+					if @average_cr_rating.nan?
+						movie.update_attributes(:rating => 0.0)
+					else
+						movie.update_attributes(:rating => @average_cr_rating)
+					end
 
 					puts @average_cr_rating
 
