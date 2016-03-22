@@ -9,7 +9,9 @@ class Movie < ActiveRecord::Base
 
 	before_save :default_values
   def default_values
-    self.rating = 0.0
+  	if rating.blank?
+    	self.rating = 0.0
+    end
   end
 	
 	friendly_id :title, :use => [:slugged, :finders]
