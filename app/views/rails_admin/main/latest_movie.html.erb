@@ -1,4 +1,4 @@
-<% @latest = Movie.where(:release_date => 6.months.ago..Date.today).order(release_date: :desc) %>
+<% @latest = Movie.where(:release_date => 6.months.ago..Date.today).order(release_date: :desc).paginate(:page => params[:page],:per_page => 10 ) %>
 
 <table class="table table-condensed table-striped">
 	<thead>
@@ -22,8 +22,10 @@
 			<td class="genres_field has_and_belongs_to_many_association_type" title=""><% if movie.genres.present? %>| <% movie.genres.each do |genre| %><%= genre.title %> | <% end %> <% end %></td>
 			<td class="director_field string_type"><%= movie.director %></td>
 			<td class="rating_field float_type"><%= movie.rating %></td>
+			
 			<td class="last links">
 			  <ul class="inline list-inline">
+			  	<li><%= link_to '<i class="icon-thumbs-up"></i>'.html_safe,rails_admin.reviews_path(model_name: 'movie', id: movie.id) %></li>
 					<li class="icon edit_member_link " rel="tooltip" title="Edit">
 						<%= link_to '<i class="icon-pencil"></i>'.html_safe,rails_admin.edit_path(model_name: 'movie', id: movie.id) %>
 							<!-- <i class="icon-pencil"></i> -->
@@ -45,3 +47,4 @@
 	
 </table>
 
+<%= will_paginate @latest %>

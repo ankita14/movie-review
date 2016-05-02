@@ -5,12 +5,7 @@
 			<div class="span6">
 				<h1><%= @movie.title %></h1>
 			</div>
-			<div class="span6">
-				<ul class="breadcrumb pull-right">
-					<li><a href="/">Home</a> <span class="divider">/</span></li>
-					<li class="active">Movie</li>
-				</ul>
-			</div>
+			
 		</div>
 	</div>
 </section>
@@ -64,7 +59,7 @@
 					<% end %>
 				</div>                        
 			</div>
-			<div class="blog-item well">
+			<div class="blog-item well des">
 
 						<!-- <h2><%#= link_to @movie.title, movie_with_title_path(@movie) %></h2> -->
 						
@@ -78,62 +73,71 @@
 			  </p>
 
 			  <% if @movie.release_date? %>
-			  	<p><h4><b>Release Date : </b> <%= @movie.release_date %></h4></p>
+			  	<p><label>Release Date : </label><%= @movie.release_date %></p>
 			  <% end %>
 
 			  <% if @movie.genres.present? %>
-			  	<p><h4><b>Genre : </b> 
+			  	<p><label>Genre : </label>
 			  	<% @movie.genres.each do |genre| %>
 						<%= link_to genre.title, genre_with_title_path(genre) %> 
-					<% end %></h4></p>
+					<% end %></p>
 			  <% end %>
 
 			  <% if @movie.director? %>
-			  	<p><h4><b>Directed By : </b> <%= @movie.director %></h4></p>
+			  	<p><label>Directed By : </label> <%= @movie.director %></p>
 			  <% end %>
 
 			  <% if @movie.producer? %>
-			  	<p><h4><b>Produced By : </b> <%= @movie.producer %></h4></p>
+			  	<p><label>Produced By : </label> <%= @movie.producer %></p>
 			  <% end %>
 
 			  <% if @movie.music_director? %>
-			  	<p><h4><b>Music By : </b> <%= @movie.music_director %></h4></p>
+			  	<p><label>Music By : </label> <%= @movie.music_director %></p>
 			  <% end %>
 
 			  <% if @movie.star_cast? %>
-			  	<p><h4><b>Stars : </b> <%= @movie.star_cast %></h4></p>
+			  	<p><label>Stars : </label> <%= @movie.star_cast %></p>
 			  <% end %>
 
 			  <% if @movie.movie_type %>
-			  	<p><h4><b>Movie Type : </b> <%= @movie.movie_type.title %></h4></p>
+			  	<p><label>Movie Type : </label> <%= @movie.movie_type.title %></p>
 			  <% end %>
 
 			  <% if @movie.movie_length? %>
-			  	<p><h4><b>Movie Length : </b> <%= @movie.movie_length %></h4></p>
+			  	<p><label>Movie Length : </label> <%= @movie.movie_length %></p>
 			  <% end %>
 
 			  <% if @movie.description? %>
-			  	<p><h4><b>StoryPlot :</b> <%= @movie.description.html_safe %></h4></p>
+			  	<p><label>StoryPlot :</label> <%= @movie.description.html_safe %></p>
 			  <% end %>
 
 			  <% if @movie.movie_reviews? %>
-			  	<p><h4><b>Reviews :</b> <%= @movie.movie_reviews.html_safe %></h4></p>
+			  	<p><label>Reviews :</label> <%= @movie.movie_reviews.html_safe %></p>
 			  <% end %>
 
 			  <% if @movie.youtube_url? %>
 			  	<!-- <p><h4><b>Youtube URL : </b> --> 
 			  	<div class="embed-container">  
 					  <%= embed(@movie.youtube_url) %>
-					</div>  
+					</div> 
+					
 			  	<!-- </h4></p> -->
 			  <% end %>
+			  <br/>
+			  <p><label>Share us on</label> <%#= social_share_button_tag(@movie.title, :url => "http://192.168.1.21:3000/movie/#{@movie.slug}", :popup => "true") %></p>
+
+			  <%= social_share_button_tag(@movie.title, :url => "http://192.168.1.21:3000/movie/#{@movie.slug}", :image => "#{@movie.image}", via: "MovieReview") %>
 
 			  <% if @movie.release_date.present? %>
 
 					<% unless @movie.release_date.future? %>
+					<br>
+
+						<div class="av_cr_rating"><h3 class="avr_cr">Average Critics Rating:</h3></div>
+						<br/>
 
 						<% if @movie.critics_ratings.count > 0 %>
-							<h4>Critics Ratings:</h4>
+							<!-- <h4>Critics Ratings:</h4> -->
 
 							<% @movie.critics_ratings.each do |cr| %>
 								<b> <%= cr.title%>:</b>
@@ -163,7 +167,7 @@
 					<% end %>
 
 				<% end %>
-				<br/><br/>
+				
 
 				<% if @movie.release_date.present? %>
 
@@ -171,21 +175,26 @@
 
 						<% @total_reviews = 0 %>
 								<%# @total_count = 0 %>
-						<% @total_count = @movie.reviews.count %>
+						
 
 						<% @average_user_reviews = 0.0 %>
+
 
 						<%# unless @movie.release_date.future? %>
 
 					  <div id="starrating">
 							<div id="stars">
-								<h4>Average User Ratings:</h4>
+								<h3 class="avr_cr">Average User Ratings:</h3>
 							</div>
 						</div>
 
 						<%# end %>
 
-				  	<p class="pull-right"><i class="icon-comment pull"></i> 	<%= @movie.reviews.count %> <% if @movie.reviews.count < 2 %> Review <% else %> Reviews <% end %>
+						<% @app_rev = @movie.reviews.where(:approved => true) %>
+
+						<% @total_count = @app_rev.count %>
+
+				  	<p class="pull-right"><i class="icon-comment pull"></i> 	<%= @app_rev.count %> <% if @app_rev.count < 2 %> Review <% else %> Reviews <% end %>
 				  	</p>
 
 				  <% end %>
@@ -200,11 +209,11 @@
 				
 					<div id="comments" class="comments">
 
-						<h4> <%= @movie.reviews.count %> Review(s)</h4>
+						<h4> <%= @app_rev.count %> Review(s)</h4>
 
 						
 
-						<% if @movie.reviews.count == 0 %>
+						<% if @app_rev.count == 0 %>
 							<div class="comments-list">
 								<div class="comment media">
 									<div class="media-body">
@@ -220,48 +229,229 @@
 								<%# @total_count = 0 %>
 								<%# @total_count = @movie.reviews.count %>
 								<% @movie.reviews.each do |review| %>
-									<% @total_reviews = @total_reviews + review.rating %>
-									<div class="comment media">
-										<div class="pull-left">
-											<!-- <img class="avatar" src="images/sample/cAvatar1.jpg" alt="" />   -->
-										</div>
-
-										<div class="media-body">
-											<strong>Posted by <% if review.user %> <%= review.user.email %><% elsif review.admin %><%= review.admin.email %><% end %></strong>   on <small> <%= review.created_at.strftime("%b %dth, %Y") %> </small>
-											<div id="starrating">
-												<div class="rating-<%= review.id %>">
-
-												</div>
+									<% if review.approved %>
+										<% @total_reviews = @total_reviews + review.rating %>
+										<div class="comment media">
+											<div class="pull-left">
+												<!-- <img class="avatar" src="images/sample/cAvatar1.jpg" alt="" />   -->
 											</div>
-											<%= review.comment.html_safe %>										
-												
-										 </div>
-									</div>
-									<script type="text/javascript">
-										$(function(){
-											$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
-													$('.rating-<%= review.id %>').raty({ score: <%= review.rating %>,
-											  	readOnly: true,
-										    	path: '/assets'
-												});
+
+											<div class="media-body">
+												<strong>Posted by <% if review.user.username.present? %> <%= review.user.username %><% else %> user<%= review.user.id %><% end %></strong>   on <small> <%= review.created_at.strftime("%b %dth, %Y") %> </small>
+												<div id="starrating">
+													<div class="rating-<%= review.id %>">
+
+													</div>
+												</div>
+												<% if review.comment.present? %>
+													<%= review.comment.html_safe %>
+												<% end %>					
+													
+											 </div>
+										</div>
+										<script type="text/javascript">
+											$(function(){
+												$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+														$('.rating-<%= review.id %>').raty({ score: <%= review.rating %>,
+												  	readOnly: true,
+											    	path: '/assets'
+													});
+												})
 											})
-										})
-								</script>	
+										</script>
+									<% end %>
+
+
 								<% end %>	
+
+								<%= will_paginate @movie_reviews %>
+
+								<% @average_user_reviews = @total_reviews/@total_count %>
 								
 							</div>
 
-							<% if user_signed_in? %>
-							<%= link_to 'Write a Review',  movie_with_review_path(@movie) %>
-						<% else %>
-							<h5><%= link_to 'Login to Write a Review.', new_user_session_path %></h5>
-						<% end %>
+
+
+							
 
 						<% end %>
 
 						<br/>
 
-						<div id="disqus_thread"></div>
+						<% if user_signed_in? %>
+							<% @user_movie_check = Review.find_by_user_id_and_movie_id(current_user.id, @movie.id) %>
+								
+								<% if @user_movie_check.present? %>
+									<p>You have already rated this movie.</p>
+								<% else %>
+									<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" id="rev_write" data-target="#myModal" >Write a review</button>
+							
+							<% end %>
+
+							<div id="myModal" class="modal fade review_box" role="dialog">
+  							<div class="modal-dialog">
+
+    						<!-- Modal content-->
+						    	<div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">Write a review</h4>
+							      </div>
+							      <div class="modal-body">
+	        						<p>
+		        						<% @review = Review.new %>
+
+								        <%= form_for([@review], :remote=>true) do |f| %>
+							            <div class="field">
+							              <div id="star-rating"></div>
+							            </div>
+							            <div class="field">
+							              <%= f.label :comment %><br>
+							              <%= f.cktext_area :comment, :required => true %>
+							            </div>
+							            <div class="field">
+							              <%=  f.hidden_field :movie_id, :value => @movie.id %>
+							            </div>
+							            <div class="actions">
+							              <%= f.submit 'Create Review', :class => "btn btn-primary", :id => "hide" %>
+							            </div>
+							          <% end %>
+							         </p>
+      							</div>
+    							</div>
+							  </div>
+							</div>
+
+							
+							<a href="#" data-toggle="modal" data-target="#myModal1" id="showmsg"></a>
+
+							<div id="myModal1" class="modal fade" role="dialog"  id="info_box" >
+  							<div class="modal-dialog">
+
+    						<!-- Modal content-->
+						    	<div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">Information</h4>
+							      </div>
+							      <div class="modal-body">
+	        						<p>
+		        						Thank you for submitting the review, it will be displayed once approved by admin.!
+							         </p>
+      							</div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							      </div>
+    							</div>
+							  </div>
+							</div>
+
+
+								<%#= link_to 'Write a Review',  '#', :class => "write_rev" %>
+
+
+						  <section>
+						    <div class="row-fluid">
+
+						      <div id="rev_box" style="display: none;">
+
+						        <div class="status alert alert-success" style="display: none"></div>
+
+						        <% @review = Review.new %>
+
+						        	<%= form_for([@review]) do |f| %>
+						            
+
+						            <div class="field">
+						              <div id="star-rating"></div>
+						            </div>
+						            <div class="field">
+						              <%= f.label :comment %><br>
+						              <%= f.cktext_area :comment, :required => true %>
+						            </div>
+						            <div class="field">
+						              <%=  f.hidden_field :movie_id, :value => @movie.id %>
+						            </div>
+						            <div class="actions">
+						              <%= f.submit 'Create Review', :class => "btn btn-primary" %>
+						            </div>
+						          <% end %>
+						          <%#= link_to 'Back', reviews_path %>
+						        
+						    	</div>
+
+						  	</div>
+
+							</section>
+
+							<script type="text/javascript">
+							
+
+
+								$(function(){
+									$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+											$('#star-rating').raty({
+										    half: true,
+										    path: '/assets/',
+										    scoreName: 'review[rating]'
+										  });
+									})
+								})
+
+								
+							</script>
+
+
+
+							<% else %>
+								
+								<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#loginModal">Login to Write a Review</button>
+
+								<div id="loginModal" class="modal fade" role="dialog">
+  								<div class="modal-dialog">
+
+								    <!-- Modal content-->
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        								<h4 class="modal-title">Sign In</h4>
+      								</div>
+      								<div class="modal-body">
+        								<p class="pull-left">
+						
+													<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+														<div class="field">
+															<p><%= f.label :login %><br />
+															<%= f.text_field :login, :required => true, :placeholder => "Username or Email Id", :class => "fieldwid" %></p>
+														</div>
+
+														<div class="field">
+															<%= f.label :password %><br />
+															<%= f.password_field :password, :required => true, autocomplete: "off", :placeholder => "Password", :class => "fieldwid" %>
+														</div>
+
+														<% if devise_mapping.rememberable? -%>
+															<div class="field">
+																<%= f.check_box :remember_me %>
+																<%= f.label :remember_me %>
+															</div>
+														<% end -%>
+
+														<div class="actions">
+															<%= f.submit "Log in", :class => 'btn btn-primary btn-large' %>
+														</div>
+													<% end %>
+								
+													<%= render "devise/shared/links" %>
+												</p>
+      								</div>
+  									</div>
+									</div>
+								</div>
+
+							<% end %>
+
+					<!-- 	<div id="disqus_thread"></div>
 							<script>
 							    /**
 							     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
@@ -282,7 +472,7 @@
 							        (d.head || d.body).appendChild(s);
 							    })();
 							</script>
-							<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+							<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript> -->
 
 
 						
@@ -353,6 +543,17 @@
 				})
 			})					
 		</script>
+
+		<script type="text/javascript">
+			$(function(){
+				$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+						$('.av_cr_rating').raty({ score: <%= @movie.rating %>,
+				  	readOnly: true,
+			    	path: '/assets'
+					});
+				})
+			})
+		</script>
 		
 		<!-- <div id="starrating">
 			Rating: <div id="stars">: </div>
@@ -365,22 +566,87 @@
 </div>
 <aside class="span4">
 	<%= render "layouts/top_rated" %>
-<!-- End Popular Posts -->        
+	<!-- End Popular Posts -->        
 
-<%= render "layouts/genres" %>
-<!-- End Category Widget -->
+	<%= render "layouts/genres" %>
+	<!-- End Category Widget -->
 
-<%#= render "layouts/movietype" %>
-<%= render "layouts/sidebar_banner" %>
+	<%#= render "layouts/movietype" %>
+	<%= render "layouts/sidebar_banner" %>
 
 </aside>
 </div>
 
 </section>
-<script id="dsq-count-scr" src="//moviereviewviva.disqus.com/count.js" async></script>
+<!-- <script id="dsq-count-scr" src="//moviereviewviva.disqus.com/count.js" async></script> -->
 
 <style type="text/css">
 	p{
 		font-size: 17px !important;
 	}
+	.fieldwid {
+		width: 300px !important;
+	}
 </style>
+
+
+<script>
+
+   $.extend({
+      getUrlVars: function(){
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+          hash = hashes[i].split('=');
+          vars.push(hash[0]);
+          vars[hash[0]] = hash[1];
+        }
+        return vars;
+      },
+      getUrlVar: function(name){
+        return $.getUrlVars()[name];
+      }
+    });
+
+
+	$(document).ready(function() {
+
+ var byName = $.getUrlVar('movie');
+if (byName=='review') {
+
+	
+ $('html, body').animate({
+        scrollTop: $(document).height()
+    }, 'slow');
+}
+else{
+
+}
+
+		// movie
+	
+    $(".write_rev").click(function(e) {
+    	e.preventDefault();
+        $("#rev_box").slideToggle();
+    });
+
+
+   
+
+    // $("#hide").click(function(){
+    //     $(".review_box").hide();
+    //     $(".info_box").show();
+    // });
+
+ // $('#myModal1').modal('show');
+// $('#showmsg').on( "click", function() {
+//   $(this).click();
+// });
+	});
+</script>
+
+<script type="text/javascript">
+
+
+</script>

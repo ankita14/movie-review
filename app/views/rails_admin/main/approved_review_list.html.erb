@@ -1,0 +1,44 @@
+<% @approved_rev = Review.where(:approved => true).order(created_at: :desc).paginate(:page => params[:page],:per_page => 10 ) %>
+
+<table class="table table-condensed table-striped">
+	<thead>
+		<tr>
+		<th class="shrink">
+		<th class="" title="" rel="tooltip" data-original-title="">Movie</th>
+		<th class="" title="" rel="tooltip" data-original-title="">User</th>
+		<th class="" title="" rel="tooltip" data-original-title="">Rating</th>
+		<th class="last shrink"></th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<% @approved_rev.each do |review| %>
+			<tr class="review_row">
+			<td>
+			<td class="title_field string_type"><%= review.movie.title %></td>
+			<td class="title_field string_type"><%= review.user.email %></td>
+			<td class="rating_field float_type"><%= review.rating %></td>
+			<td class="last links">
+			  <ul class="inline list-inline">
+					<li class="icon show_member_link " rel="tooltip" title="Show">
+						<%= link_to '<i class="icon-info-sign"></i>'.html_safe,rails_admin.show_path(model_name: 'review', id: review.id) %>
+							<!-- <i class="icon-pencil"></i> -->
+						
+							<span style="display:none">Show</span>
+					</li>
+					<li class="icon delete_member_link " rel="tooltip" title="Delete">
+						<%= link_to '<i class="icon-remove"></i>'.html_safe, rails_admin.delete_path(model_name: 'review', id: review.id) %>
+							<!-- <i class="icon-remove"></i> -->
+						
+						<span style="display:none">Delete</span>
+					</a>
+					</li>
+				</ul>
+			</td>
+		<% end %>
+	</tbody>
+	
+</table>
+
+<%= will_paginate @approved_rev %>
+

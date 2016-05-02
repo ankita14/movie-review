@@ -11,9 +11,34 @@
 				<div class="nav-collapse collapse pull-right">
 					<ul class="nav">
 						<li><%= nav_link "Home", root_path %></li>
-						<li><%= nav_link "Top Rated", movies_top_rated_movies_path %></li>
-						<li><%= nav_link "Latest", movies_latest_movies_path %></li>
-						<li><%= nav_link "Upcoming", movies_upcoming_movies_path %></li>
+						<!-- <li><%#= nav_link "Top Rated", movies_top_rated_movies_path %></li>
+						<li><%#= nav_link "Latest", movies_latest_movies_path %></li>
+						<li><%#= nav_link "Upcoming", movies_upcoming_movies_path %></li> -->
+
+						<li class="dropdown">
+							<a href="/movies/top_rated_movies" class="dropdown-toggle" data-toggle="dropdown">Top Rated<i class="icon-angle-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><%= nav_link "Bollywood", movies_top_rated_movies_bollywood_path %></li>
+								<li><%= nav_link "Hollywood", movies_top_rated_movies_hollywood_path %></li>
+							</ul>
+						</li>
+
+						<li class="dropdown">
+							<a href="/movies/latest_movies" class="dropdown-toggle" data-toggle="dropdown">Latest<i class="icon-angle-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><%= nav_link "Bollywood",  movies_latest_movies_bollywood_path  %></li>
+								<li><%= nav_link "Hollywood", movies_latest_movies_hollywood_path %></li>
+							</ul>
+						</li>
+
+						<li class="dropdown">
+							<a href="/movies/upcoming_movies" class="dropdown-toggle" data-toggle="dropdown">Upcoming<i class="icon-angle-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><%= nav_link "Bollywood", movies_upcoming_movies_bollywood_path %></li>
+								<li><%= nav_link "Hollywood", movies_upcoming_movies_hollywood_path %></li>
+							</ul>
+						</li>
+
 						<li><%= nav_link "Contact Us", contact_path %></li>
 						<li><%= nav_link "About Us", home_about_path %></li>
 						<li class="login dropdown">
@@ -35,6 +60,10 @@
 	.logo_back img{
 		height: 90px;
 	}
+
+	.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-submenu:hover > a, .dropdown-submenu:focus > a {
+    background: #0997f0 none repeat scroll 0 0;
+}
 	</style>
 	
 	<%#= @banners.where(:ad_type => 'Text').first.text %>

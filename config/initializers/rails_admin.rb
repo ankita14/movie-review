@@ -4,6 +4,14 @@ require Rails.root.join('lib', 'rails_admin', 'latest_movie.rb')
 RailsAdmin::Config::Actions.register(RailsAdmin::Config::Actions::LatestMovie)
 require Rails.root.join('lib', 'rails_admin', 'upcoming_movie.rb')
 RailsAdmin::Config::Actions.register(RailsAdmin::Config::Actions::UpcomingMovie)
+require Rails.root.join('lib', 'rails_admin', 'reviews.rb')
+RailsAdmin::Config::Actions.register(RailsAdmin::Config::Actions::Reviews)
+require Rails.root.join('lib', 'rails_admin', 'approve_review.rb')
+RailsAdmin::Config::Actions.register(RailsAdmin::Config::Actions::ApproveReview)
+require Rails.root.join('lib', 'rails_admin', 'approved_review_list.rb')
+RailsAdmin::Config::Actions.register(RailsAdmin::Config::Actions::ApprovedReviewList)
+require Rails.root.join('lib', 'rails_admin', 'unapproved_review_list.rb')
+RailsAdmin::Config::Actions.register(RailsAdmin::Config::Actions::UnapprovedReviewList)
 
 RailsAdmin.config do |config|
 
@@ -11,7 +19,7 @@ RailsAdmin.config do |config|
 
 	### Popular gems integration
 	# config.excluded_models << "Rate"
-	config.included_models = ["Banner", "Movie", "Review", "Genre", "User", "MovieType"]
+	config.included_models = ["Banner", "FeaturedLatest", "FeaturedTrailor", "Movie", "Genre", "Review", "User", "MovieType", "Contact"]
 
 	# config.actions do
 	#   searchable false
@@ -58,11 +66,7 @@ RailsAdmin.config do |config|
 			field :movie_length		
 			field :youtube_url
 			field :image
-	    field :admin_id, :hidden do
-	      default_value do
-	        bindings[:view]._current_user.id
-	      end
-	    end
+	   
 	    # field :critics_ratings, :has_and_belongs_to_many_association do
         
      #  end
@@ -74,20 +78,34 @@ RailsAdmin.config do |config|
 	    field :title do
         filterable false
         searchable true
-      end			
+      end
 
-	    field :genres do
+      field :movie_type do
         filterable false
-        searchable false
-      end			
+        searchable true
+      end				
+
+	    # field :genres do
+     #    filterable false
+     #    searchable false
+     #  end		
+
 	    field :director do
         filterable false
         searchable false
-      end			
+      end	
+
 	    field :rating do
         filterable false
         searchable false
-      end			
+      end
+
+     #  field :reviews do
+    	# 	pretty_value do
+    	# 		bindings[:view].link_to(value.count, reviews_path(model_name: 'movie', id: movie.id))
+    	# 		# value.count		
+    	# 	end
+    	# end
 
 	  end
 	end
@@ -134,6 +152,23 @@ RailsAdmin.config do |config|
 		      value.try(:email)
 		    end
 			end
+		end
+	end
+
+	config.model Contact do
+		navigation_icon 'icon-star'
+		
+		list do
+			field :f_name do
+        filterable false
+        searchable false
+      end			
+			
+			field :email do
+        filterable false
+        searchable true
+      end						
+
 		end
 	end
 
@@ -185,10 +220,10 @@ RailsAdmin.config do |config|
 	config.model User do
 		navigation_icon 'icon-user'
 		list do
-			field :email do
+			field :username do
         filterable false
         searchable true
-      end			
+      end		
 			field :sign_in_count do
         filterable false
         searchable false
@@ -197,10 +232,10 @@ RailsAdmin.config do |config|
         filterable false
         searchable false
       end			
-			field :username do
+			field :email do
         filterable false
         searchable true
-      end			
+      end		
 		end
 	
 		edit do
@@ -238,6 +273,52 @@ RailsAdmin.config do |config|
 		end
 		edit do
 			field :title
+		end
+	end
+
+	config.model FeaturedTrailor do
+		navigation_icon 'icon-star'
+		parent Movie
+		list do
+			field :movie do
+        filterable false
+        searchable true
+      end
+			field :position do
+        filterable false
+        searchable false
+      end
+		end
+		edit do
+			field :movie #do
+			# 	default_value do
+	  #       bindings[:view].where('release_date > ?', Date.today)
+	  #     end
+			# end
+			field :position
+		end
+	end
+
+	config.model FeaturedLatest do
+		navigation_icon 'icon-star'
+		parent Movie
+		list do
+			field :movie do
+        filterable false
+        searchable true
+      end
+			field :position do
+        filterable false
+        searchable false
+      end
+		end
+		edit do
+			field :movie #do
+			# 	default_value do
+	  #       bindings[:view].where('release_date > ?', Date.today)
+	  #     end
+			# end
+			field :position
 		end
 	end
 
@@ -290,9 +371,13 @@ RailsAdmin.config do |config|
 
 	config.actions do
 		dashboard                     # mandatory
-		index                         # mandatory
+		index    											# mandatory
+		approve_review do
+			only Review
+		end
+
 		new do
-			except ['Review']
+			except ['Review', 'Contact']
 		end
 
 		bollywood_hungama do
@@ -307,10 +392,26 @@ RailsAdmin.config do |config|
 			only Movie
 		end
 
+		reviews do
+			only Movie
+		end
+
+		unapproved_review_list do
+			only Review
+		end
+
+		approved_review_list do
+			only Review
+		end
+
 		# export
 		# bulk_delete
-		# show
-		edit
+		show do
+			except ['Genre', 'MovieType', 'User']
+		end
+		edit do
+			except ['Contact', 'Review']
+		end
 		delete
 
 		# show_in_app

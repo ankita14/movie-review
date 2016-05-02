@@ -16,5 +16,7 @@
 //= require jquery_ujs
 //= require ratyrate
 //= require turbolinks
+//= require social-share-button
+//= require bootstrap-multiselect
 //= require ckeditor/init
 //= require_tree .

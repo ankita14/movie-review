@@ -1,4 +1,13 @@
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<style type="text/css">
+	.inner-content {
+    display: inline-block;
+    margin: 20px 10px 0 0;
+    width: 100%;
+}
+
+
+</style>
 <% if @search_results %>
 	<%#= @movies.inspect %>
 	<section class="title">
@@ -7,12 +16,7 @@
 				<div class="span6">
 					<h1>Search Results For '<%= params[:search] %>'</h1>
 				</div>
-				<div class="span6">
-					<ul class="breadcrumb pull-right">
-						<li><a href="index.html">Home</a> <span class="divider">/</span></li>
-						<li class="active">Movies</li>
-					</ul>
-				</div>
+				
 			</div>
 		</div>
 	</section>
@@ -24,16 +28,12 @@
 				<div class="span6">
 					<h1>Movies</h1>
 				</div>
-				<div class="span6">
-					<ul class="breadcrumb pull-right">
-						<li><a href="index.html">Home</a> <span class="divider">/</span></li>
-						<li class="active">Movies</li>
-					</ul>
-				</div>
+				
 			</div>
 		</div>
 	</section>
 <% end %>
+
 
 
 
@@ -46,10 +46,9 @@
 		<%#= notice %>
 	</div> -->
 <% if @movies.present? %>
+	<% if @search_results %>
 
-
-	
-	<section id="about-us" class="container main">
+		<section id="about-us" class="container main">
 		<div class="row-fluid">
 			<div class="span8">
 				<div class="blog">
@@ -139,7 +138,8 @@
 								  </div>
 								  <p>
 										<% if movie.image.present? %>
-											<%= image_tag(movie.image.indexThumb.url) %>
+											<%#= image_tag(movie.image) %>
+											<%= image_tag(movie.image.thumb.url) %>
 										<% else %>
 											<%= image_tag("/assets/not_available.jpg") %>
 										<% end %>        
@@ -205,12 +205,365 @@
 
 		</div>
 	</div>
+
+	<% else %>
+	
+		<section id="about-us" class="container main">
+			<div class="row-fluid">
+				<div class="span8">
+					<div class="blog">
+						<div class="widget widget-popular">
+							<div class="widget-blog-items">
+								<% @index_top_banner.each do |banner| %>
+									
+									<% if banner.ad_type == 'Text' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">			
+												<!-- <div class=""> -->
+													<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+													</div>
+												<!-- </div> -->
+											</div>
+										</div>
+									<% end %>
+
+									<% if banner.ad_type == 'Banner' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">			
+												<!-- <div class=""> -->
+													<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+														<% if banner.link.present? %>
+															<%= link_to( image_tag(banner.banner), banner.link) %>
+														<% else %>
+															<%= image_tag(banner.banner) %>
+														<% end %>
+													</div>
+												<!-- </div> -->
+											</div>
+										</div>
+									<% end %>
+
+									<% if banner.ad_type == 'Google Ad' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">
+												<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+													<%= raw banner.google_add_js %>
+												</div>
+											</div>
+										</div>
+									<% end %>
+									
+								<% end %>
+							</div>                        
+						</div>
+						
+						<!-- <new code here> -->
+
+							<div class="widget ads">
+								<h3>Latest Bollywood Movies</h3><p></p>
+								<div class="row-fluid addclass">
+								<% @latest_bollywood.first(4).each_with_index do |movie,index| %>
+									<%# if index%2 == 0 %>
+										
+										<!-- <div class="row-fluid"> -->
+										<!-- <div class="row-fluid"> -->
+											<div class="span6 <%if index == 2%>movie2<% end %> <% if index == 3 %>movie3<% end %>">
+												<% if movie.image.present? %>
+												<%= link_to image_tag(movie.image.thumb.url), movie_with_title_path(movie), :class => "imgcls" %>
+													<%#= link_to image_tag(movie.image.thumb.url), movie_with_title_path(movie), :class => "imgcls" %>
+												<% else %>
+													<%= link_to image_tag("/assets/not_available.jpg"), movie_with_title_path(movie) %>
+												<% end %> 
+												<h5 class="pull-right movie_rating-<%= movie.id %>"></h5><h5 class="pull-left"><%= movie.title %></h5>
+												<script type="text/javascript">
+													$(function(){
+														$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+																$('.movie_rating-<%= movie.id %>').raty({ score: <%= movie.rating %>,
+														  	readOnly: true,
+													    	path: '/assets'
+															});
+														})
+													})
+												</script>
+											</div>
+
+								<% end %>
+								<p>&nbsp;</p>
+								<h5>
+								<%= link_to 'View More' , movies_latest_movies_bollywood_path, :class => "viewmore" %>
+								</h5>
+								</div>
+
+							</div>
+
+							<p></p>
+
+				
+					  <div class="widget widget-popular">
+							<div class="widget-blog-items">
+								<% @index_inbetween_banner.each do |banner| %>
+									
+									<% if banner.ad_type == 'Text' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">			
+												<!-- <div class=""> -->
+													<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+													</div>
+												<!-- </div> -->
+											</div>
+										</div>
+									<% end %>
+
+									<% if banner.ad_type == 'Banner' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">			
+												<!-- <div class=""> -->
+													<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+														<% if banner.link.present? %>
+															<%= link_to( image_tag(banner.banner), banner.link) %>
+														<% else %>
+															<%= image_tag(banner.banner) %>
+														<% end %>
+													</div>
+												<!-- </div> -->
+											</div>
+										</div>
+									<% end %>
+
+									<% if banner.ad_type == 'Google Ad' %>
+										<div class="widget-blog-item media">					
+											<div class="media-body">
+												<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+													<%= raw banner.google_add_js %>
+												</div>
+											</div>
+										</div>
+									<% end %>
+									
+								<% end %>
+							</div>                        
+						</div>
+
+						<%if @latest_hollywood.present? %>
+
+							<div class="widget ads">
+									<h3>Latest Hollywood Movies</h3><p></p>
+									<div class="row-fluid addclass">
+									<% @latest_hollywood.first(2).each_with_index do |movie,index| %>
+										<%# if index%2 == 0 %>
+											
+											<!-- <div class="row-fluid"> -->
+											<!-- <div class="row-fluid"> -->
+												<div class="span6 <%if index == 2%>movie2<% end %> <% if index == 3 %>movie3<% end %>">
+													<% if movie.image.present? %>
+														<%#= link_to image_tag(movie.image), movie_with_title_path(movie), :class => "imgcls" %>
+														<%= link_to image_tag(movie.image.thumb.url), movie_with_title_path(movie), :class => "imgcls" %>
+													<% else %>
+														<%= link_to image_tag("/assets/not_available.jpg"), movie_with_title_path(movie) %>
+													<% end %> 
+													<h5 class="pull-right movie_rating-<%= movie.id %>"></h5><h5 class="pull-left"><%= movie.title %></h5>
+													<script type="text/javascript">
+														$(function(){
+															$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+																	$('.movie_rating-<%= movie.id %>').raty({ score: <%= movie.rating %>,
+															  	readOnly: true,
+														    	path: '/assets'
+																});
+															})
+														})
+													</script>
+												</div>
+
+
+										
+									<% end %>
+
+									<p>&nbsp;</p>
+									<h5>
+									<%= link_to 'View More' , movies_latest_movies_hollywood_path, :class => "viewmore" %>
+									</h5>
+									</div>
+							</div>
+
+						<% end %>
+
+						
+
+		<!-- <div class="widget widget-popular "> -->
+			<!-- <div class="container"> -->
+				<div class="row-fluid addclass">
+					<div class="span6 addclass">
+						<h3 align="center">Upcoming Trailors</h3>
+						<%#= top_movies.first.image %>
+						<% if @featured_upcoming1 %>
+							<% if @featured_upcoming1.image.present? %>
+								<%= link_to image_tag(@featured_upcoming1.image.thumb.url), movie_with_title_path(@featured_upcoming1) %>
+							<% else %>
+								<%= image_tag("/assets/not_available.jpg") %>
+							<% end %>
+							
+							<p><h3>Baaghi Official Theatrical Trailer feat <%= link_to @featured_upcoming1.title, movie_with_title_path(@featured_upcoming1) %></h3></p>
+						<% end %>
+
+						<p>	
+						<% if @featured_upcoming2 %>
+							<div class="inner-content">
+								<div class="tag-thumbnail span4">					
+									<% if @featured_upcoming2.image.present? %>
+										<%= link_to image_tag(@featured_upcoming2.image.thumb.url), movie_with_title_path(@featured_upcoming2) %>
+									<% else %>
+										<%= image_tag("/assets/not_available.jpg") %>
+									<% end %>						
+
+									<div class="tube">
+									
+									</div>
+								</div>
+								<h4 class="span8"><%= link_to @featured_upcoming2.title, movie_with_title_path(@featured_upcoming2) %>
+								</h4>
+						
+								<span class="post-meta span8"><span class="comt"><span class="comnum"></span><span class="date"><h4><%= @featured_upcoming2.release_date.strftime("%d")%><%= @featured_upcoming2.release_date.strftime("%b")%>,<%= @featured_upcoming2.release_date.strftime("%y")%></h4></span></span>
+								</span> 
+							</div>
+						<% end %>
+						</p>
+
+						<% if @featured_upcoming2 %>
+
+							<p><div class="inner-content"><div class="tag-thumbnail span4">
+
+							<% if @featured_upcoming3.image.present? %>
+									<%= link_to image_tag(@featured_upcoming3.image.thumb.url), movie_with_title_path(@featured_upcoming3) %>
+								<% else %>
+									<%= image_tag("/assets/not_available.jpg") %>
+								<% end %>
+							
+
+							<div class="tube"></div></a></div><h4 class="span8"><%= link_to @featured_upcoming3.title, movie_with_title_path(@featured_upcoming3) %></h4><span class="post-meta span8"><span class="comt"><span class="comnum"></span><span class="date"><h4><%= @featured_upcoming2.release_date.strftime("%d")%><%= @featured_upcoming2.release_date.strftime("%b")%>,<%= @featured_upcoming2.release_date.strftime("%y")%></h4></span></span>
+							</span> </div></p>
+						<% end %>
+
+						<div style="clear:both;"> </div>
+					</div>
+
+					<div class="span6 addclass">
+						<h3 align="center">Latest Trailors</h3>
+						<%#= top_movies.first.image %>
+						<% if @featured_latest1 %>
+						<% if @featured_latest1.image.present? %>
+								<%= link_to image_tag(@featured_latest1.image.thumb.url), movie_with_title_path(@featured_latest1) %>
+							<% else %>
+								<%= image_tag("/assets/not_available.jpg") %>
+							<% end %>
+						
+						
+
+						<p><h3>Baaghi Official Theatrical Trailer feat <%= link_to @featured_latest1.title, movie_with_title_path(@featured_latest1) %></h3></p>
+						<p>
+						<% end %>
+
+						<% if @featured_latest2 %>
+						<div class="inner-content">
+						<div class="tag-thumbnail span4">
+						
+							<% if @featured_latest2.image.present? %>
+								<%= link_to image_tag(@featured_latest2.image.thumb.url), movie_with_title_path(@featured_latest2) %>
+							<% else %>
+								<%= image_tag("/assets/not_available.jpg") %>
+							<% end %>
+
+						<div class="tube">
+							
+						</div>
+						</div>
+						<h4 class="span8"><%= link_to @featured_latest2.title, movie_with_title_path(@featured_latest2) %>
+						</h4>
+						
+						<span class="post-meta span8"><span class="comt"><span class="comnum"></span><span class="date"><h4><%= @featured_latest2.release_date.strftime("%d")%><%= @featured_latest2.release_date.strftime("%b")%>,<%= @featured_latest2.release_date.strftime("%y")%></h4></span></span>
+						</span> </div></p>
+						<% end %>
+
+						<% if @featured_latest3 %>
+						<p><div class="inner-content"><div class="tag-thumbnail span4">
+						
+						<% if @featured_latest3.image.present? %>
+								<%= link_to image_tag(@featured_latest3.image.thumb.url), movie_with_title_path(@featured_latest3) %>
+							<% else %>
+								<%= image_tag("/assets/not_available.jpg") %>
+							<% end %>
+
+						<div class="tube"></div></a></div><h4 class="span8"><%= link_to @featured_latest3.title, movie_with_title_path(@featured_latest3) %></h4><span class="post-meta span8"><span class="comt"><span class="comnum"></span><span class="date"><h4><%= @featured_latest2.release_date.strftime("%d")%><%= @featured_latest2.release_date.strftime("%b")%>,<%= @featured_latest2.release_date.strftime("%y")%></h4></span></span>
+						</span> </div></p>
+						<% end %>
+
+						<div style="clear:both;"> </div>
+					</div>
+				</div>
+			<!-- </div> -->
+		<!-- </div> -->
+				<div class="gap"></div>
+
+				<div class="widget widget-popular">
+						<div class="widget-blog-items">
+							<% @index_bottom_banner.each do |banner| %>
+								
+								<% if banner.ad_type == 'Text' %>
+									<div class="widget-blog-item media">					
+										<div class="media-body">			
+											<!-- <div class=""> -->
+												<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+												</div>
+											<!-- </div> -->
+										</div>
+									</div>
+								<% end %>
+
+								<% if banner.ad_type == 'Banner' %>
+									<div class="widget-blog-item media">					
+										<div class="media-body">			
+											<!-- <div class=""> -->
+												<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+													<% if banner.link.present? %>
+														<%= link_to( image_tag(banner.banner), banner.link) %>
+													<% else %>
+														<%= image_tag(banner.banner) %>
+													<% end %>
+												</div>
+											<!-- </div> -->
+										</div>
+									</div>
+								<% end %>
+
+								<% if banner.ad_type == 'Google Ad' %>
+									<div class="widget-blog-item media">					
+										<div class="media-body">
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+												<%= raw banner.google_add_js %>
+											</div>
+										</div>
+									</div>
+								<% end %>
+								
+							<% end %>
+						</div>                        
+
+
+
+				</div>
+
+				<div class="gap"></div>		  
+
+					</div>
+				</div>
+			<!-- </div> -->
+		<!-- </section> -->
+	<% end %>
 <% else %>
 	
 	<section id="about-us" class="container main">
 		<div class="row-fluid">
 			<div class="span8">
-				<div class="blog">
+				<div class="blog span8">
 					<div class="widget widget-popular">
 					<div class="widget-blog-items">
 						<% @index_top_banner.each do |banner| %>
@@ -303,7 +656,7 @@
 					</div>                        
 				</div>
 
-				  <%= will_paginate @movies %>
+				 
 
 			  <div class="gap"></div>
 

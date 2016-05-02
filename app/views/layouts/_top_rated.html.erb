@@ -1,20 +1,7 @@
-<!-- <div class="preview">
-	<div class="overlay">
-	</div>
-	<div class="links">
-		<%#= link_to image_tag(@banners.where(:position => 'Top').first.banner), @banners.first.link %>                                
-	</div>
-</div>
-<div class="desc">
-	<h5><%#= @banners.first.text %></h5>
-	<small>Portfolio item short description</small>
-</div> -->
-                
-<!-- <br/> -->
-<div class="widget widget-popular">
+<div class="widget widget-popular top_right">
 	<h3>Top Rated Movies</h3>
 	<div class="widget-blog-items">
-		<% @top_movies.first(3).each do |movie| %>
+		<% @top_movies.first(5).each do |movie| %>
 			<div class="widget-blog-item media">
 				<div class="pull-left">
 					<div class="date">
@@ -22,58 +9,37 @@
 						<span class="day"><%= movie.release_date.strftime("%d") %></span>
 					</div>
 				</div>
-				<div class="media-body">
-
-					<!-- <h5> -->
-
-					<% if movie.image.present? %>
-				  	<%= link_to image_tag(movie.image.thumb.url), movie_with_title_path(movie) %>
-					<% else %>
-						<%= image_tag("/assets/not_available.jpg") %>
-					<% end %>   
-					
-					<%#= link_to movie.title, movie_with_title_path(movie) %>
-					<!-- </h5> -->
+				<div class="media-body"><h5>
+					<%= link_to movie.title, movie_with_title_path(movie) %></h5>
+					<p class="movie_rating-<%= movie.id %>"></p>
+					<script type="text/javascript">
+						$(function(){
+							$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+									$('.movie_rating-<%= movie.id %>').raty({ score: <%= movie.rating %>,
+							  	readOnly: true,
+						    	path: '/assets'
+								});
+							})
+						})
+					</script>
+					<!-- <a href="#"><h5>Duis sed odio sit amet nibh vulputate cursus a sit amet mauris</h5></a> -->
 				</div>
 			</div>
 		<% end %>
-		<% if @top_movies.count > 3 %>
+		<% if @top_movies.count > 5 %>
 			<h5>
-				<%= link_to 'View More' , movies_top_rated_movies_path %>
+				<%= link_to 'View More' ,  movies_top_rated_movies_bollywood_path , :class => "viewmore" %>
 			</h5>
 		<% end %>
-	</div>
-
-</div>
-
-<!-- <div class="widget widget-popular">
-	<h3>Currently Playing Movies</h3>
-	<div class="widget-blog-items">
-	<%#= @upcoming.first.release_date.future? %>
-		<%# @currently.each do |movie| %>		
-			<div class="widget-blog-item media">
-				<div class="pull-left">
-					<div class="date">
-						<span class="month"><%#= movie.release_date.strftime("%b") %></span>
-						<span class="day"><%#= movie.release_date.strftime("%d") %></span>
-					</div>
-				</div>
-				<div class="media-body">
-
-					
-					<%#= link_to image_tag(movie.image.thumb.url), movie_with_title_path(movie) %>
-					<%#= link_to movie.title, movie_with_title_path(movie) %>
-					
-				</div>
-			</div>			
-		<%# end %>
 	</div>                        
-</div> --> 
+</div>
+<br/>
+<br/>
 
 <div class="widget widget-popular">
 	<h3>Upcoming Movies</h3>
 	<div class="widget-blog-items">
-		<% @upcoming.first(3).each do |movie| %>			
+		<% @upcoming.first(2).each do |movie| %>			
 			<div class="widget-blog-item media">
 				<div class="pull-left">
 					<div class="date">
@@ -83,24 +49,23 @@
 				</div>
 				<div class="media-body">
 
-					<!-- <h5> -->
+					<h5>
 
-					<% if movie.image.present? %>
-						<%= link_to image_tag(movie.image.thumb.url), movie_with_title_path(movie) %>
-					<% else %>
-						<%= link_to image_tag("/assets/not_available.jpg") %>
-					<% end %>   
-					
-					<%#= link_to movie.title, movie_with_title_path(movie) %>
-					<!-- </h5> -->
+						<% if movie.image.present? %>
+							<%= link_to image_tag(movie.image.thumb.url), movie_with_title_path(movie) %>
+						<% else %>
+							<%= link_to image_tag("/assets/not_available.jpg"), movie_with_title_path(movie) %>
+						<% end %>   
+						
+						<%= link_to movie.title, movie_with_title_path(movie) %>
+					</h5>
 				</div>
 			</div>			
 		<% end %>
-		<% if @upcoming.count > 3 %>
+		<% if @upcoming.count > 2 %>
 			<h5>
-				<%= link_to 'View More' , movies_upcoming_movies_path %>
+				<%= link_to 'View More' ,  movies_upcoming_movies_bollywood_path , :class => "viewmore" %>
 			</h5>
 		<% end %>
 	</div>                        
 </div>
-

@@ -26,12 +26,7 @@ class MoviesController < ApplicationController
   # POST /movies
   # POST /movies.json
   def create
-    # m = Mechanize.new
-    # page = m.get(movie_params[:url])
     @movie = Movie.new(movie_params)
-    # @movie.title = page.title
-    # @movie.director = page.at('.credit_summary_item .itemprop').text
-    # @movie.stars = page.at('.credit_summary_item h4').text
     respond_to do |format|
       if @movie.save
         @@madat = ''
@@ -102,14 +97,7 @@ class MoviesController < ApplicationController
   end
 
   def mov_with_critic
-    logger.debug "666666666666666666"
-    logger.debug params
-    logger.debug "=================="
-    logger.debug movie_params
-    logger.debug "=================="
-    logger.debug critics_params
-    logger.debug "666666666666666666"
-
+    
     @movie = Movie.new(movie_params)
     @critics_ratings = CriticsRating.new(critics_params)
     if @movie.save && @critics_ratings.save

@@ -4,14 +4,9 @@
 		<div class="container">
 			<div class="row-fluid">
 				<div class="span6">
-					 <h1><%= @movie_genres.title %></h1>
+					 <h1><%= @genre.title %></h1>
 				</div>
-				<div class="span6">
-					<ul class="breadcrumb pull-right">
-						<li><a href="/">Home</a> <span class="divider">/</span></li>
-						<li class="active"><%= @movie_genres.title %></li>
-					</ul>
-				</div>
+				
 			</div>
 		</div>
 	</section>
@@ -66,7 +61,7 @@
 										</div>                        
 									</div>
 
-									<% @movie_genres.movies.order(release_date: :desc).each do |movie| %>
+									<% @genre_movies.each do |movie| %>
 
 										<script type="text/javascript">
 											$(function(){
@@ -174,7 +169,7 @@
 
 							<!-- Paginationa -->
 							<div class="pagination">
-								<%#= will_paginate @category_posts %>
+								<%= will_paginate @genre_movies %>
 							</div>
 
 
@@ -193,6 +188,8 @@
 </div>
 
 </section>
+
+<%= will_paginate @genre_movies %>
 
 </body>
 </html>

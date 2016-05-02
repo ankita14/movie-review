@@ -34,4 +34,20 @@ en:
         menu: 'Upcoming Movie'
         title: 'Upcoming Movies'
         breadcrumb: 'Upcoming Movies'
+      reviews:
+        menu: 'User Reviews'
+        title: 'User Reviews'
+        breadcrumb: 'User Reviews'
+      approve_review:
+        menu: 'Approve Review'
+        title: 'Approve Review'
+        breadcrumb: 'Approve Reviews'
+      approved_review_list:
+        menu: 'Approved Reviews'
+        title: 'Approved Reviews'
+        breadcrumb: 'Approved Reviews'
+      unapproved_review_list:
+        menu: 'Unapproved Reviews'
+        title: 'Unapproved Reviews'
+        breadcrumb: 'Unapproved Reviews'
   hello: "Hello world"

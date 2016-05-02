@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   
+  resources :featured_trailors
   resources :banners
   post '/rate' => 'rater#create', :as => 'rate'
   mount Ckeditor::Engine => '/ckeditor'
   root 'home#index'
   # get '/admins/sign_in' => "/admin ", as: :admin_root
-  get '/' => "home#latest", as: :user_root
+  get '/' => "home#index", as: :user_root
   
   # match '/admins/sign_in' => "admins/sessions#destroy ", as: :admin_root, via: :delete
   get 'home/index'
@@ -13,13 +14,21 @@ Rails.application.routes.draw do
   # get 'home/movie_detail'
   # get 'home/movie_genres'
   # get 'home/movie_types'
+  match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
   match '/reviews/new/:id' => 'reviews#new', :as => :movie_with_review, via: :get
   match '/movie/:id' => 'home#movie_detail', :as => :movie_with_title, via: :get
   match '/movies/types/:id' => 'home#movie_types', :as => :type_with_title, via: :get
   match '/movies/genres/:id' => 'home#movie_genres', :as => :genre_with_title, via: :get  
-  match 'movies/top_rated_movies' => 'home#top_rated', via: :get
-  match 'movies/upcoming_movies' => 'home#upcoming', via: :get
-  match 'movies/latest_movies' => 'home#latest', via: :get
+  match 'movies/top_rated_movies/bollywood' => 'home#bollywood_top_rated', via: :get
+  match 'movies/upcoming_movies/bollywood' => 'home#bollywood_upcoming', via: :get
+  match '/movies/latest_movies/bollywood' => 'home#bollywood_latest', via: :get
+
+  match 'movies/top_rated_movies/hollywood' => 'home#hollywood_top_rated', via: :get
+  match 'movies/upcoming_movies/hollywood' => 'home#hollywood_upcoming', via: :get
+  match '/movies/latest_movies/hollywood' => 'home#hollywood_latest', via: :get
+
+  match 'movies/bollywood_movies' => 'home#bollywood_movies', via: :get
+  match 'movies/hollywood_movies' => 'home#hollywood_movies', via: :get
   match '/contact' => 'contacts#new', :as => :contact, via: :get
   resources :contacts
   resources :reviews
@@ -44,7 +53,33 @@ Rails.application.routes.draw do
   devise_for :admins, controllers: { sessions: "admins/sessions" }
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # devise_for :users 
-  devise_for :users, controllers: { sessions: "users/sessions" }
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks', passwords: 'users/passwords', confirmations: 'users/confirmations' }
+  
+  namespace :api do
+    namespace :v1 do
+      resources :movies, only: [:index,:show] do
+        collection do
+          post 'getTopRatedMovies'      
+          post 'getLatestMovies'
+          post 'getUpcomingMovies'
+          post 'getMovies' 
+          get 'terms'
+          post 'moviedetails' 
+          post 'userSaveRating'
+        end
+      end
+      resources :users, only: [:show, :create] do
+        collection do
+          post 'login'
+          post 'register'
+          post 'forgetpass'
+          post 'saveRegID'
+        end
+      end
+      # resources :microposts, only: [:index, :create, :show, :update, :destroy]
+    end
+  end
+
   # match '/admin' => '' , :as => :admin_logout_path, via: :get
   # match '/pages/:id' => 'welcome#page', :as => :page_with_title, via: :get  
   # The priority is based upon order of creation: first created -> highest priority.

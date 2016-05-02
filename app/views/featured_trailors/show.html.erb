@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Movie:</strong>
+  <%= @featured_trailor.movie_id %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @featured_trailor.position %>
+</p>
+
+<%= link_to 'Edit', edit_featured_trailor_path(@featured_trailor) %> |
+<%= link_to 'Back', featured_trailors_path %>

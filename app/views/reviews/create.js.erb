@@ -1,0 +1,23 @@
+function CKupdate(){
+  for ( instance in CKEDITOR.instances ){
+    CKEDITOR.instances[instance].updateElement();
+    CKEDITOR.instances[instance].setData('');
+  }
+}
+
+function Ysdf(){
+  $('#myModal1').modal('show');
+}
+
+CKupdate();
+$('#star-rating input').val(0);
+$('#star-rating').trigger('mouseover');
+$('#star-rating').trigger('mouseleave');
+$('.modal-backdrop').remove();
+// $('#myModal').css('opacity',0);
+$('#myModal .close').trigger('click');
+$('#showmsg').trigger('click');
+
+var l = document.getElementById('showmsg');
+l.click();
+Ysdf();

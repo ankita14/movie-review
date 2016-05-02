@@ -1,0 +1,25 @@
+<%= form_for(@featured_trailor) do |f| %>
+  <% if @featured_trailor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@featured_trailor.errors.count, "error") %> prohibited this featured_trailor from being saved:</h2>
+
+      <ul>
+      <% @featured_trailor.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :movie_id %><br>
+    <%= f.number_field :movie_id %>
+  </div>
+  <div class="field">
+    <%= f.label :position %><br>
+    <%= f.number_field :position %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

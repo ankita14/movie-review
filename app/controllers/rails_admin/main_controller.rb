@@ -15,37 +15,31 @@ module RailsAdmin
 
 			class_eval <<-EOS, __FILE__, __LINE__ + 1
 				def #{action.action_name}
-					puts "------------------------"
+					
 					if "#{action.action_name}" == "edit"
-						puts "#{action.action_name}"
-						puts "__________"
-						puts params["movie"]
+						
+						
 						@@cr_edit = params["cr"]
-						puts "__________"
-						puts @@cr_edit
+						
 					end
-					puts "------------------------"
+					
 
-					puts  "**************************"
+					
 					if "#{action.action_name}" == "new"
-						# puts  "#{action.action_name}"
-						puts  params["movie"]
-						puts "2222222"
-						puts params["cr"]
-						puts "2222222"
+					
 						@@crvalues =  params["cr"]
 					end
-					puts  "**************************"
+					
 
 					action = RailsAdmin::Config::Actions.find('#{action.action_name}'.to_sym)
 					@authorization_adapter.try(:authorize, action.authorization_key, @abstract_model, @object)
 					@action = action.with({controller: self, abstract_model: @abstract_model, object: @object})
 
-					puts  "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+					
 					if "#{action.action_name}" == "new"
-						puts @object.inspect
+						
 					end
-					puts  "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+					
 
 
 					fail(ActionNotAllowed) unless @action.enabled?
@@ -108,17 +102,10 @@ module RailsAdmin
 
 		def redirect_to_on_success
 
-			puts  "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+		
 			if ("#{@action.key}" == "new") && ("#{@model_config.label}" == "Movie")
-				# puts @object.id
-				# puts @model_config.label
-				puts "gere==========="
-			
 				i = 0
-				supplies = []
-
-				puts @@crvalues
-
+				supplies = []			
 				unless @@crvalues[:title].blank?
 			
 					cr_count =  @@crvalues[:title].length
@@ -184,24 +171,21 @@ module RailsAdmin
 						movie.update_attributes(:rating => @average_cr_rating)
 					end
 
-					puts @average_cr_rating
+				
 
 				end
 
 		
 
-			  puts "gere==========="
-				# puts "#{@action.key}"
+			 
 			end                            
-			puts  "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+			
 
-			puts "<<<<<<<<<<<<<<<<<<<<<<<<<"
+			
 			if ("#{@action.key}" == "edit") && ("#{@model_config.label}" == "Movie")
-				puts @@cr_edit
-				puts "..........."
-				puts @@cr_edit.values.reduce(:zip).map(&:flatten)
-				puts "..........."
-				puts @@cr_edit.values.transpose.inspect
+			
+			
+			
 
 				Movie.find(@object.id).critics_ratings.each do |cr|
 					cr.delete
@@ -209,14 +193,12 @@ module RailsAdmin
 
 				eachrow = @@cr_edit.values.transpose
 
-				puts "////////////"
-
-				puts @object.id
+			
 
 				eachrow.each_with_index do |cr, index|
 
 					# if eachrow[index][0].blank?
-						puts "newwwwww"
+			
 						@cr_index = CriticsRating.new
 						cr.each_with_index do |r, ind|
 							if(ind == 0)
@@ -233,11 +215,11 @@ module RailsAdmin
 
 							@cr_index.save!
 
-							puts eachrow[index.to_i][ind.to_i]
+			
 						end
 					# else
 					# 	@cr_index = CriticsRating.find(eachrow[index][0])
-					# 	puts "updateeeee"
+			
 					# 	cr.each_with_index do |r, ind|
 					# 		if(ind == 1)
 					# 			@cr_index.title = eachrow[index.to_i][ind.to_i]
@@ -253,7 +235,7 @@ module RailsAdmin
 
 					# 		@cr_index.save!
 
-					# 		puts eachrow[index.to_i][ind.to_i]
+			
 					# 	end
 					# end
 				end
@@ -286,15 +268,12 @@ module RailsAdmin
 					else
 						movie.update_attributes(:rating => @average_cr_rating)
 					end
-
-					puts @average_cr_rating
-
 				end
 
-				puts "////////////"
+			
 
 			end
-			puts "<<<<<<<<<<<<<<<<<<<<<<<<<"
+			
 
 			notice = t('admin.flash.successful', name: @model_config.label, action: t("admin.actions.#{@action.key}.done"))
 			if params[:_add_another]

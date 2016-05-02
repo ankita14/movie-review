@@ -1,4 +1,4 @@
-<% @upcoming = Movie.where('release_date >= ?', Date.today).order(:release_date) %>
+<% @upcoming = Movie.where('release_date >= ?', Date.today).order(:release_date).paginate(:page => params[:page],:per_page => 10 ) %>
 
 <table class="table table-condensed table-striped">
 	<thead>
@@ -43,3 +43,6 @@
 	</tbody>
 	
 </table>
+
+<%= will_paginate @upcoming %>
+

@@ -1,0 +1,348 @@
+
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<% if @search_results %>
+	<%#= @movies.inspect %>
+	<section class="title">
+		<div class="container">
+			<div class="row-fluid">
+				<div class="span6">
+					<h1>Search Results For '<%= params[:search] %>'</h1>
+				</div>
+				<div class="span6">
+					<ul class="breadcrumb pull-right">
+						<li><a href="index.html">Home</a> <span class="divider">/</span></li>
+						<li class="active">Movies</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+<% else %>
+	<%#= @movies.inspect %>
+	<section class="title">
+		<div class="container">
+			<div class="row-fluid">
+				<div class="span6">
+					<h1>Movies</h1>
+				</div>
+				<div class="span6">
+					<ul class="breadcrumb pull-right">
+						<li><a href="index.html">Home</a> <span class="divider">/</span></li>
+						<li class="active">Movies</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+<% end %>
+
+
+
+	<!-- / .title -->  
+
+	<!-- <div class="alert alert-dismissible alert-info" ><%#= notice %></div> -->
+
+	<!-- <div class="alert alert-dismissible alert-info hgt">
+		<button class="close" type="button" data-dismiss="alert">×</button>
+		<%#= notice %>
+	</div> -->
+<% if @movies.present? %>
+
+
+	
+	<section id="about-us" class="container main">
+		<div class="row-fluid">
+			<div class="span8">
+				<div class="blog">
+					<div class="widget widget-popular">
+					<div class="widget-blog-items">
+						<% @index_top_banner.each do |banner| %>
+							
+							<% if banner.ad_type == 'Text' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Banner' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+												<% if banner.link.present? %>
+													<%= link_to( image_tag(banner.banner), banner.link) %>
+												<% else %>
+													<%= image_tag(banner.banner) %>
+												<% end %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Google Ad' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">
+										<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+											<%= raw banner.google_add_js %>
+										</div>
+									</div>
+								</div>
+							<% end %>
+							
+						<% end %>
+					</div>                        
+				</div>
+					
+					<% @movies.each do |movie| %>
+
+						<% if movie.release_date.present? %>
+							<% unless movie.release_date.future? %>
+								<div class="blog-item well">
+									<h2 class="movie_rating-<%= movie.id %>">
+										<%= link_to movie.title, movie_with_title_path(movie) %>
+			            </h2>
+									<div class="blog-meta clearfix">
+										<p class="pull-left">
+										  <i class="icon-folder-close"></i> 
+										  <% if movie.genres.present? %>
+										  <% movie.genres.each do |genre| %>
+										  	<%= link_to genre.title, genre_with_title_path(genre) %> | 
+										  	 
+										  <% end %>
+										  <i class="icon-folder-close"></i>
+										  <% end %>
+										  <% if movie.movie_type %>
+										  	<%= link_to movie.movie_type.title, type_with_title_path(movie.movie_type) %> | <i class="icon-calendar"></i> <%= movie.release_date.strftime("%b %dth, %Y") %>
+										  <% end %>
+									  </p>
+									  <p class="pull-right">
+									  	<i class="icon-comment pull"></i> 
+
+											<%= movie.reviews.count %> <% if movie.reviews.count < 2 %> Review <% else %> Reviews <% end %>
+		  
+									  <script type="text/javascript">
+											$(function(){
+												$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+														$('.movie_rating-<%= movie.id %>').raty({ score: <%= movie.rating %>,
+												  	readOnly: true,
+											    	path: '/assets'
+													});
+												})
+											})
+									</script>	
+									  </p>
+								  </div>
+								  <p>
+										<% if movie.image.present? %>
+											<%= image_tag(movie.image.indexThumb.url) %>
+										<% else %>
+											<%= image_tag("/assets/not_available.jpg") %>
+										<% end %>        
+									</p>
+								  <p><%= movie.description.html_safe %></p>
+								  <%= link_to 'Read More', movie_with_title_path(movie), :class => "btn btn-link" %> <i class="icon-angle-right"></i>
+							  </div>
+							<% end %>
+						<% end %>
+				  <!-- End Blog Item -->
+				  <% end %>
+
+				  <div class="widget widget-popular">
+					<div class="widget-blog-items">
+						<% @index_bottom_banner.each do |banner| %>
+							
+							<% if banner.ad_type == 'Text' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Banner' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+												<% if banner.link.present? %>
+													<%= link_to( image_tag(banner.banner), banner.link) %>
+												<% else %>
+													<%= image_tag(banner.banner) %>
+												<% end %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Google Ad' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">
+										<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+											<%= raw banner.google_add_js %>
+										</div>
+									</div>
+								</div>
+							<% end %>
+							
+						<% end %>
+					</div>                        
+				</div>
+
+				  <%= will_paginate @movies %>
+
+			  <div class="gap"></div>
+
+			  
+
+		</div>
+	</div>
+<% else %>
+	
+	<section id="about-us" class="container main">
+		<div class="row-fluid">
+			<div class="span8">
+				<div class="blog">
+					<div class="widget widget-popular">
+					<div class="widget-blog-items">
+						<% @index_top_banner.each do |banner| %>
+							
+							<% if banner.ad_type == 'Text' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Banner' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+												<% if banner.link.present? %>
+													<%= link_to( image_tag(banner.banner), banner.link) %>
+												<% else %>
+													<%= image_tag(banner.banner) %>
+												<% end %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Google Ad' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">
+										<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+											<%= raw banner.google_add_js %>
+										</div>
+									</div>
+								</div>
+							<% end %>
+							
+						<% end %>
+					</div>                        
+				</div>
+					
+					<p>There are no movies containing the term(s) '<%= params[:search] %>'.</p>
+
+				  <div class="widget widget-popular">
+					<div class="widget-blog-items">
+						<% @index_bottom_banner.each do |banner| %>
+							
+							<% if banner.ad_type == 'Text' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Banner' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">			
+										<!-- <div class=""> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+												<% if banner.link.present? %>
+													<%= link_to( image_tag(banner.banner), banner.link) %>
+												<% else %>
+													<%= image_tag(banner.banner) %>
+												<% end %>
+											</div>
+										<!-- </div> -->
+									</div>
+								</div>
+							<% end %>
+
+							<% if banner.ad_type == 'Google Ad' %>
+								<div class="widget-blog-item media">					
+									<div class="media-body">
+										<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+											<%= raw banner.google_add_js %>
+										</div>
+									</div>
+								</div>
+							<% end %>
+							
+						<% end %>
+					</div>                        
+				</div>
+
+				  <%= will_paginate @movies %>
+
+			  <div class="gap"></div>
+
+			  
+
+		</div>
+	</div>
+  
+<% end %>
+
+	<aside class="span4">
+
+		<div class="widget search">
+
+			<%= form_tag(root_path, :method => "get", id: "search-form") do %>
+				<%= text_field_tag :search, params[:search], placeholder: "Search Movies", class: "input-block-level search_box" %>
+				<%= submit_tag "Search",:class => 'btn btn-primary search_btn' %>
+			<% end %>
+			<!-- <form>
+				<input type="text" class="input-block-level" placeholder="Search">
+			</form> -->
+		</div>
+
+
+		
+		
+		<%= render "layouts/top_rated" %>
+		<!-- End Popular Posts -->        
+
+		<%= render "layouts/genres" %>
+		<!-- End Category Widget -->
+
+		<%#= render "layouts/movietype" %>
+
+		<%= render "layouts/sidebar_banner" %>
+
+
+	</aside>
+</div>
+
+</section>

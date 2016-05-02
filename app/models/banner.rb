@@ -6,9 +6,9 @@ class Banner < ActiveRecord::Base
 
 	def position_enum
 		['Header', 'Sidebar', 'Movie Detail Top', 'Movie Detail Bottom', 
-			'Index Top', 'Index Bottom', 'Genre Top', 'Genre Bottom', 
-			'Top Rated Top', 'Top Rated Bottom', 'Upcoming Bottom', 'Upcoming Top', 
-			'Page Top', 'Page Bottom', 'Latest Top', 'Latest Bottom']
+			'Index Top', 'Index In between', 'Index Bottom', 'Genre Top', 'Genre Bottom', 
+			'Top Rated Top', 'Top Rated In between', 'Top Rated Bottom', 'Upcoming Bottom', 'Upcoming In between', 'Upcoming Top', 
+			'Page Top', 'Page Bottom', 'Latest Top', 'Latest In between', 'Latest Bottom']
 	end
 
 	def size_enum

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160308051309) do
+ActiveRecord::Schema.define(version: 20160427121318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,20 @@ ActiveRecord::Schema.define(version: 20160308051309) do
     t.text     "reviews"
   end
 
+  create_table "featured_latests", force: :cascade do |t|
+    t.integer  "movie_id"
+    t.integer  "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "featured_trailors", force: :cascade do |t|
+    t.integer  "movie_id"
+    t.integer  "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "genres", force: :cascade do |t|
     t.string   "title"
     t.datetime "created_at", null: false
@@ -103,6 +117,16 @@ ActiveRecord::Schema.define(version: 20160308051309) do
     t.integer "genre_id", null: false
     t.integer "movie_id", null: false
   end
+
+  create_table "identities", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "movie_types", force: :cascade do |t|
     t.string   "title"
@@ -116,7 +140,6 @@ ActiveRecord::Schema.define(version: 20160308051309) do
     t.text     "description"
     t.string   "movie_length"
     t.string   "director"
-    t.integer  "admin_id"
     t.string   "image"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
@@ -164,14 +187,19 @@ ActiveRecord::Schema.define(version: 20160308051309) do
 
   add_index "rating_caches", ["cacheable_id", "cacheable_type"], name: "index_rating_caches_on_cacheable_id_and_cacheable_type", using: :btree
 
+  create_table "register_devices", force: :cascade do |t|
+    t.string "register"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.float    "rating"
     t.text     "comment"
     t.integer  "user_id"
     t.integer  "movie_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "admin_id"
+    t.boolean  "approved",   default: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -188,9 +216,13 @@ ActiveRecord::Schema.define(version: 20160308051309) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "username"
+    t.string   "mobile"
+    t.string   "regID"
+    t.string   "app"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "identities", "users"
 end

@@ -1,0 +1,30 @@
+<% @reviews = Movie.find(@object.id).reviews.order(created_at: :desc).paginate(:page => params[:page],:per_page => 10 ) %>
+
+<h4>Movie: <%= Movie.find(@object.id).title %>  </h4>
+<hr/>
+
+<% if @reviews.count > 0 %>
+	<% @reviews.each do |movie| %>
+
+		<p><b>Rating:</b> <%= movie.rating %></p>
+		<% if movie.comment.present? %>
+			<p><b>Comment: </b><%= movie.comment.html_safe %></p>
+		<% end %> 
+		<% if movie.user.present? %>
+			<p><b>User: </b><%= movie.user.email %></p>
+		<% end %>
+		<%= link_to '<i class="icon-remove"></i>'.html_safe, rails_admin.delete_path(model_name: 'review', id: movie.id) %> &nbsp;&nbsp;&nbsp;
+		<% unless movie.approved %>
+		<%= link_to '<i class="icon-check"></i>'.html_safe, rails_admin.approve_review_path(model_name: 'review', id: movie.id) %>
+		<% end %>
+
+		<p></p>
+		<br/>
+
+	<% end %>
+
+	<%= will_paginate @reviews %>
+
+<% else %>
+	No reviews yet by the users for this movie.
+<% end %>

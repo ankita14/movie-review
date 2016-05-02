@@ -4,14 +4,9 @@
 		<div class="container">
 			<div class="row-fluid">
 				<div class="span6">
-					 <h1><%= @type_movies.title %></h1>
+					 <h1><%= @type.title %></h1>
 				</div>
-				<div class="span6">
-					<ul class="breadcrumb pull-right">
-						<li><a href="/">Home</a> <span class="divider">/</span></li>
-						<li class="active"><%= @type_movies.title %></li>
-					</ul>
-				</div>
+				
 			</div>
 		</div>
 	</section>
@@ -65,7 +60,7 @@
 										</div>                        
 									</div>
 
-									<% @type_movies.movies.order(release_date: :desc).each do |movie| %>
+									<% @type_movies.order(release_date: :desc).each do |movie| %>
 
 										<script type="text/javascript">
 											$(function(){
@@ -106,8 +101,9 @@
 													<%= image_tag("/assets/not_available.jpg") %>
 												<% end %>        
 											</p>
-											
-											<p><%= movie.description.html_safe %></p>
+											<% if movie.description.present? %>
+												<p><%= movie.description.html_safe %></p>
+											<% end %>
 											<%= link_to 'Read More', movie_with_title_path(movie) %>
 
 											<%#= link_to 'Read More', welcome_blog_item_path(:blog => blog.id), :class => 'read' %> <i class="icon-angle-right"></i>
@@ -169,7 +165,7 @@
 
 							<!-- Paginationa -->
 							<div class="pagination">
-								<%#= will_paginate @category_posts %>
+								<%= will_paginate @type_movies %>
 							</div>
 
 

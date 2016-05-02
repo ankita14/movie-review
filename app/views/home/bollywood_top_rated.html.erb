@@ -1,0 +1,124 @@
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<section class="title">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span6">
+				<h1>Top Rated Bollywood Movies</h1>
+			</div>
+			
+		</div>
+	</div>
+</section>
+
+<aside class="span12">
+	<div class="widget search span4 pull-right" style="margin: 10px -51px 0 0;">
+
+		<%= form_tag(movies_top_rated_movies_bollywood_path, :method => "get", id: "search-form") do %>
+			<%= text_field_tag :search, params[:search], placeholder: "Search Movies", class: "input-block-level search_box" %>
+			<%= submit_tag "Search",:class => 'btn btn-primary search_btn' %>
+		<% end %>
+		<!-- <form>
+			<input type="text" class="input-block-level" placeholder="Search">
+		</form> -->
+	</div>
+</aside>
+
+<section id="portfolio" class="container main">
+	<% if @top_rated_movies.present? %>    
+
+		<ul class="gallery col-4">
+			<% @top_rated_movies.each_with_index do |movie, index| %>
+
+				<% if index == 8 %>
+					&nbsp;
+					
+							<% @top_rated_between_banner.each do |banner| %>
+								
+								<% if banner.ad_type == 'Text' %>
+									<div class="widget-blog-item media">					
+										<div class="media-body">			
+											<!-- <div class=""> -->
+												<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; background-color: pink; "><%= banner.text.html_safe %>
+												</div>
+											<!-- </div> -->
+										</div>
+									</div>
+								<% end %>
+
+								<% if banner.ad_type == 'Banner' %>
+									<div class="widget-blog-item media">					
+										<div class="media-body">			
+											<!-- <div class=""> -->
+												<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%; text-align:left;">
+													<% if banner.link.present? %>
+														<%= link_to( image_tag(banner.banner), banner.link) %>
+													<% else %>
+														<%= image_tag(banner.banner) %>
+													<% end %>
+												</div>
+											<!-- </div> -->
+										</div>
+									</div>
+								<% end %>
+
+								<% if banner.ad_type == 'Google Ad' %>
+								<!-- 	<div class="widget-blog-item media">					
+										<div class="media-body"> -->
+											<div class="<%= banner.ad_type%>-<%= banner.id %>" style="width: 100%;">
+												<%= raw banner.google_add_js %>
+											</div>
+										<!-- </div>
+									</div> -->
+								<% end %>
+								
+							<% end %>
+						
+				<% end %>
+
+				<p></p>
+					<script type="text/javascript">
+						$(function(){
+							$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
+									$('.movie_rating-<%= movie.id %>').raty({ score: <%= movie.rating %>,
+							  	readOnly: true,
+						    	path: '/assets'
+								});
+							})
+						})
+					</script>
+
+				<li>
+					<div class="preview">
+						
+						<% if movie.image.present? %>
+						
+							<%= link_to( image_tag(movie.image.thumb.url), movie_with_title_path(movie)) %>
+						<% else %>
+							<%= link_to( image_tag("/assets/not_available.jpg"), movie_with_title_path(movie)) %>
+						<% end %>
+
+					</div>
+
+					<div class="desc">
+						<h5><%= link_to movie.title, movie_with_title_path(movie), :class => "mov_link" %></h5>
+						<small class="movie_rating-<%= movie.id %>">
+							<!-- <h2 class="movie_rating-<%= movie.id %>" > -->
+							<p class="pull-right indent"><% if movie.release_date %>
+								<i class="icon-calendar"></i> <%= movie.release_date.strftime("%b %dth, %Y") %>
+							<% end %></p>
+						</small>
+					</div>                
+				</li>
+				<!--/Item 1--> 
+
+			<% end %>
+
+		</ul>
+	<% else %>
+		<div class="span8">
+		<b>There are no movies containing the term(s) <%= params[:search]%></b>
+		</div>
+	<% end %>
+		
+</section>
+<%= will_paginate @top_rated_movies %>

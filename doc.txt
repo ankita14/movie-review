@@ -1,0 +1,88 @@
+1. User login, signup on front end.
+2. Rating and review from front users
+3. Social sites login and sharing
+4. Login with either username or email
+5. Navigation for top rated, upcoming, latest with separate submenus for each for bollywood and hollywood.
+6. Google map on contact page.
+7. Change in designs and layouts twice on home page, sidebar and all listing pages.
+8. Search functionality
+9. Filter by genres in sidebar with number count of movies with them.
+10. Average User ratings with listings of individual ratings by user too on movie detail page.
+11. Average Critics ratings with individual critics rating given by admin on movie detail page.
+12. Pagination on every listing page.
+13. Login form in modal pop up on movie detail page.
+14. Write a review box in modal pop up on movie detail page.
+15. After submitting the review one more pop up to inform the successfully submitting of review.
+16. Review will only be displayed on front when it will be approved by admin.
+17. Manage separate sessions for both admin and user on the same browser.
+18. Three different types of banners (google ad, text banner and image banner )
+
+
+Admin Panel:
+
+In PHP
+
+User and Movie sections are there.
+
+In ROR
+
+1. Banner with all the 3 types that admin can change with all the details like position, order, its type, can add text for text banners, can upload image for image banners with required link on it and add google ad too from admin as and where required.
+
+2. All the queries that are submitted by front end user by contact form can be viewed/delete as per the requirement by admin.
+
+3. Movie section:
+	PHP: Just listing all the movies on one page with view/edit/delete option.
+
+	ROR: 
+	1. Listing of all the movies on listing page with view/edit/delete in addition with all the reviews related to that movie till date having the link on that from where admin can directly have a look on complete listing of reviews of that movie and also delete/approve any review.
+
+	2. Separate latest movies section so that admin can have a glance on all the latest 3-6 month movies with all the above mentioned options.
+
+	3. Separate upcoming movies section to have a look on all the upcoming movies, need not search from big listing of all movies.
+
+	Submenus under Movie section:
+
+		i. Featured latest: Admin can select the movie of his choice and define its order too to display the movies on index page of site under Latest Trailors section.
+
+		ii. Feature Upcoming: Same concept to display under Upcoming Trailors section.
+
+		iii. Genres: Admin can view/add/edit/delete any genre as per his requirements.
+
+		iv. Movie Types: Admin can view/add/edit/delete any type(language) as per his requirements.
+
+4. Reviews Section:
+
+	PHP: Not working, only link is there.
+
+	ROR:
+
+	1) Listing of all the reviews done by front end users of site with view/delete in addition of approve/unapprove feature.
+
+	2) Separate section for approved reviews to check all the approved review at one place rather than checking from the whole list.
+
+	3) Separate section for unapproved reviews to check all the unapproved review at one place rather than checking from the whole list so that admin can directly check all the reviews done by users and need approval to display them on site.
+
+5. User Section:
+	PHP: Only listing of app users with email,mobile,name,register date.
+
+	ROR: Listing of users that includes their total sign in count, last sign in at, last sign in IP apart from their major information with edit and delete option.
+
+
+Apart from these changes in db:
+
+1. Saving of individual rating/review done by user at front managed by a separate table.
+
+2. A movie can have multiple genres so need to manage of saving this data in a separate table with movie id and genre id rather than in same movie table.
+
+3. Separate table for critics ratings that are managed by admin as they do not need any approval and also userid is not required.
+
+Also I import all the data from PHP current live site to ROR db after having changes in the received data to match it with the required data in required format for which queries have also been created.
+
+Major task in importing the PHP data: Users that I have imported from PHP site have encryped password in table as in all tables have but they are using different method in encryption/decryption and I am using other one, so same existing users are not able to login in my system. I also worked on this issue and to able to sort it out, now all existing users can login with their same password.
+
+
+Next is API work for mobile app that I have been told later.
+
+-Flow is reverse as I have to work in the same way as previously working PHP API so need to work with custom JSON with Serializers rather than default one that is provided.
+-Documentation is not there to follow.
+-Parameters are not mentioned once, need to work again and again.

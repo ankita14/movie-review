@@ -86,23 +86,31 @@
 			</div>
 		</div>
 
-		<div class="form-group control-group">   
-			<%= f.label :movie_reviews, :class => "col-sm-2 control-label" %>
+		<!-- <div class="form-group control-group">   
+			<%#= f.label :movie_reviews, :class => "col-sm-2 control-label" %>
 			<div class="col-sm-10 controls">
-				<%= f.text_area :movie_reviews, as: :ckeditor %>
+				<%#= f.text_area :movie_reviews, as: :ckeditor %>
 			</div>
-		</div> 
+		</div> --> 
 
 		<div class="form-group control-group">
 			<%= f.label :genres, :class => "col-sm-2 control-label" %>
 			<div class="col-sm-10 controls">
-				<%= f.text_field :genres, :class => "form-control", :size => "50", :value => keyval[3] %>
+				
+
+					<%= select_tag("genre_ids[]", options_for_select(Genre.all.collect { |genre| [genre.title, genre.id] }, @object.genres.collect { |genre| genre.id}), {:multiple=>true, :size => 10, :class => "ra-multiselect-collection", :id => "movie_genre_ids", :name => "movie[genre_ids][]"}) %>
+				
+
+				<%#= f.collection_select(:genres, Genre.all :id, :title), :class => "form-control", :size => "50", :id => "multiselectgenre" %>
+
+				<%#= f.text_field :genres, :class => "form-control", :size => "50", :value => keyval[3] %>
 			</div>
 		</div>
 
 		<div class="form-group control-group">
 			<%= f.label :movie_type, :class => "col-sm-2 control-label" %>
 			<div class="col-sm-10 controls">
+				<%= f.collection_select(:movie_type_id, MovieType.all, :id, :title) %>
 				<%= f.text_field :movie_type, :class => "form-control", :size => "50" %>
 			</div>
 		</div>
@@ -142,19 +150,12 @@
 			</div>
 		</div>
 
-		<div class="form-group control-group">
-			<%= f.label :movie_length, :class => "col-sm-2 control-label" %>
+	<!-- 	<div class="form-group control-group">
+			<%#= f.label :movie_length, :class => "col-sm-2 control-label" %>
 			<div class="col-sm-10 controls">
-				<%= f.text_field :movie_length, :class => "form-control", :size => "50" %>
+				<%#= f.text_field :movie_length, :class => "form-control", :size => "50" %>
 			</div>
-		</div>
-
-		<div class="form-group control-group">
-			<%= f.label :rating, :class => "col-sm-2 control-label" %>
-			<div class="col-sm-10 controls">
-				<%= f.text_field :rating, :class => "form-control", :size => "50" %>
-			</div>
-		</div>
+		</div> -->
 
 		<div class="form-group control-group">
 			<%= f.label :youtube_url, :class => "col-sm-2 control-label" %>
@@ -329,6 +330,20 @@
     // $('#btnDel').attr('disabled', 'disabled');
     $('#btnDel').css('cursor','not-allowed');
 });
+</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#movie_genre_ids').multiselect({
+            enableFiltering: true,
+            includeSelectAllOption: true,
+            maxHeight: 400,
+            dropUp: true,
+            showCheckbox  : true
+        });
+    });
 </script>
 
 <style type="text/css">

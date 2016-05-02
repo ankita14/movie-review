@@ -11,11 +11,13 @@
  * file per style scope.
  *
  *= require_tree .
+ *= require social-share-button
+ *= require bootstrap-multiselect
  *= require_self
  */
 
   .blog-meta a , .widget-blog-items a, .blog-item a, .row-fluid a  {
-		color: #2dcc70;
+		color: #0997f0;
 		text-decoration: none;
 	}
 
@@ -30,7 +32,7 @@
 	}
 
 	#bottom li.active a {
-	color: #2dcc70 !important;
+	color: #0997f0 !important;
 	}
 
 	/*.icon-film, .icon-thumbs-up, .icon-user, .icon-star, .icon-fire{
@@ -128,3 +130,79 @@ a.mov_link:hover {
 	background-color: #fff !important;
   color: #000 !important;
 }
+
+.addclass {
+	padding: 10px;
+	border: 2px solid rgb(152, 152, 152);
+}
+
+.addclass a.imgcls img{ height: 210px;
+    width: 100%;}
+
+.movie2 {
+	margin: 10px 0px 0px !important;
+}
+
+.movie3 {
+	margin: 10px 0px 0px 19px !important;
+}
+
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+ .pagination a {
+ 	padding: 2px;
+ }
+
+
+.des label{color: inherit;
+    font-family: -moz-fixed;
+    font-weight: 600;
+    line-height: 20px;
+    margin: 10px 0; font-size: 17.5px;
+    text-rendering: optimizelegibility;
+display: inline;}
+
+.viewmore {
+	 background: #0997f0 none repeat scroll 0 0;
+    color: #fff !important;
+    float: right;
+    padding: 4px 12px; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-weight: normal;
+}
+
+.viewmore:hover{ background-color: #0997f0 !important; }
+
+.avr_cr {
+	display: inline; margin: 0 10px 0 0; 
+}
+
+.top_right {
+margin: 92px 0px 0px;
+}
+
+.current {
+	color: #0997f0;
+  font-weight: bold;
+  padding: 2px;
+}
+
+.modal.fade {
+	z-index: 10;
+}
+
+.modal.fade.in{
+	z-index: 1043;
+}
+
+.btn-primary:hover {
+    background-color: #0997f0;
+}
+
+/*.dropdown:hover ul.dropdown-menu {
+    display: block;
+}*/
+
+/*header .dropdown-menu { margin: 0px; }
+
+header.navbar .nav li:hover a {   color: #0997f0;}*/

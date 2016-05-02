@@ -19,7 +19,18 @@
 <% end -%>
 
 <%- if devise_mapping.omniauthable? %>
+	<br/>
+	<b>Or Sign In With:</b><br/><br/>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %><br />
+  	<% if OmniAuth::Utils.camelize(provider) == 'Facebook' %>	
+    	<%= link_to image_tag("/assets/fb.png"), omniauth_authorize_path(resource_name, provider) %> &nbsp;
+  	<% end %>
+  	<% if OmniAuth::Utils.camelize(provider) == 'LinkedIn' %>	
+    	<%= link_to image_tag("/assets/linkedin.png"), omniauth_authorize_path(resource_name, provider) %> &nbsp;
+  	<% end %>
+  	<% if OmniAuth::Utils.camelize(provider) == 'Twitter' %>	
+    	<%= link_to image_tag("/assets/twitter.jpeg"), omniauth_authorize_path(resource_name, provider) %> &nbsp;
+  	<% end %>
+    <%#= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %>
   <% end -%>
 <% end -%>
