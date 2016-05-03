@@ -8,8 +8,16 @@ class HomeController < ApplicationController
 							 .paginate(:per_page => 12, :page => params[:page])
 
 		# @latest = Movie.where(:release_date => 6.months.ago..Date.today).order(release_date: :desc).paginate(:page => params[:page],:per_page => 12 )
-		bolly_type_id = MovieType.where(:title => 'Bollywood').first.id
-		holly_type_id = MovieType.where(:title => 'Hollywood').first.id
+		check_bolly = MovieType.where(:title => 'Bollywood')
+		if check_bolly.present?
+			bolly_type_id = MovieType.where(:title => 'Bollywood').first.id
+		end
+
+		check_holly = MovieType.where(:title => 'Hollywood')
+		if check_holly.present?
+			holly_type_id = MovieType.where(:title => 'Hollywood').first.id
+		end
+		
 		@latest_bollywood = Movie.where(:release_date => 1.months.ago..Date.today, :movie_type_id => bolly_type_id, :rating => 0.5..5).order(release_date: :desc).paginate(:page => params[:page],:per_page => 12 )
 		@latest_hollywood = Movie.where(:release_date => 1.months.ago..Date.today, :movie_type_id => holly_type_id, :rating => 0.5..5).order(release_date: :desc).paginate(:page => params[:page],:per_page => 12 )
 		@genres = Genre.all
