@@ -9,12 +9,10 @@
 	<% else %>
 		<title>MovieReview</title>
 	<% end %>
-
 	<link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
 	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-	<%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js' %>
-	<%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-hover-dropdown/2.2.1/bootstrap-hover-dropdown.min.js' %>
+
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modal.min.js">
 
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -22,7 +20,16 @@
 	<%= csrf_meta_tags %>
 </head>
 <body>
-
+<script type="text/javascript">
+$(document).ready(function(){
+	alert("hiii");
+    $('.navbar .dropdown').hover(function() {
+        $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
+    }, function() {
+        $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideUp()
+    });
+})
+</script>
 	
 
 	<% if devise_controller? && resource_name == :admin && action_name == 'new' %>
