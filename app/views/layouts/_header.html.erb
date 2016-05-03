@@ -16,7 +16,7 @@
 						<li><%#= nav_link "Upcoming", movies_upcoming_movies_path %></li> -->
 
 						<li class="dropdown">
-							<a href="" class="dropdown-toggle" data-toggle="dropdown">Top Rated<i class="icon-angle-down"></i></a>
+							<%= link_to 'Top Rated <i class="icon-angle-down"></i>'.html_safe, '#', { :class => 'dropdown-toggle', 'data-toggle' => 'dropdown' } %>
 							<ul class="dropdown-menu">
 								<li><%= nav_link "Bollywood", movies_top_rated_movies_bollywood_path %></li>
 								<li><%= nav_link "Hollywood", movies_top_rated_movies_hollywood_path %></li>
@@ -24,7 +24,7 @@
 						</li>
 
 						<li class="dropdown">
-							<a href="" class="dropdown-toggle" data-toggle="dropdown">Latest<i class="icon-angle-down"></i></a>
+							<%= link_to 'Latest <i class="icon-angle-down"></i>'.html_safe, '#', { :class => 'dropdown-toggle', 'data-toggle' => 'dropdown' } %>
 							<ul class="dropdown-menu">
 								<li><%= nav_link "Bollywood",  movies_latest_movies_bollywood_path  %></li>
 								<li><%= nav_link "Hollywood", movies_latest_movies_hollywood_path %></li>
@@ -32,11 +32,12 @@
 						</li>
 
 						<li class="dropdown">
-							<a href="/movies/upcoming_movies" class="dropdown-toggle" data-toggle="dropdown">Upcoming<i class="icon-angle-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><%= nav_link "Bollywood", movies_upcoming_movies_bollywood_path %></li>
-								<li><%= nav_link "Hollywood", movies_upcoming_movies_hollywood_path %></li>
-							</ul>
+
+							<%= link_to 'Upcoming <i class="icon-angle-down"></i>'.html_safe, '#', { :class => 'dropdown-toggle', 'data-toggle' => 'dropdown' } %>
+								<ul class="dropdown-menu">
+									<li><%= nav_link "Bollywood", movies_upcoming_movies_bollywood_path %></li>
+									<li><%= nav_link "Hollywood", movies_upcoming_movies_hollywood_path %></li>
+								</ul>
 						</li>
 
 						<li><%= nav_link "Contact Us", contact_path %></li>
