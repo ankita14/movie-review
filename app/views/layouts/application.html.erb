@@ -9,9 +9,12 @@
 	<% else %>
 		<title>MovieReview</title>
 	<% end %>
+
+	<%= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js' %>
+
 	<link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
 	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-	<%= javascript_include_tag :defaults %>
+	
 	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modal.min.js">
