@@ -44,7 +44,7 @@
 						<li><%= nav_link "About Us", home_about_path %></li>
 						<li class="login dropdown">
 							<% if user_signed_in? %>
-								<%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+								<%= link_to "Sign out", destroy_user_session_path %>
 							<% else %>
 								<%= link_to new_user_session_path do %>
 	    						<i class="icon-lock"></i>
