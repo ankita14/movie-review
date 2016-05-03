@@ -20,6 +20,7 @@ jQuery(function($) {
 	//End goto top		
 });
 $(document).ready(function(){
+	alert("hiii");
     $('.navbar .dropdown').hover(function() {
         $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
     }, function() {
