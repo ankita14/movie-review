@@ -10,7 +10,6 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require bootstrap-multiselect
 //= require jquery
 //= require jquery.raty
 //= require jquery.turbolinks
@@ -18,5 +17,6 @@
 //= require ratyrate
 //= require turbolinks
 //= require social-share-button
+//= require bootstrap-multiselect
 //= require ckeditor/init
 //= require_tree .
