@@ -61,9 +61,9 @@ class Api::V1::MovieSerializer < ActiveModel::Serializer
 
 	def thumbnail
 			if object.thumbnail.file.exists?
-				object.thumbnail = "http://192.168.1.21:3000#{object.thumbnail.url}"
+				object.thumbnail = "https://viva-movie-review.herokuapp.com#{object.thumbnail.url}"
 			else
-				object.thumbnail = "http://192.168.1.21:3000/assets/not_available.jpg"
+				object.thumbnail = "https://viva-movie-review.herokuapp.com/assets/not_available.jpg"
 			end		
 	end
 

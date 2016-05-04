@@ -45,7 +45,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 	def getTopRatedMovies
 		if params[:type] == "Hindi"
 			type_id = MovieType.where(:title => 'Bollywood').first.id
-			top_rated_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(rating: :desc).paginate(:per_page => 5, :page => params[:page])
+			top_rated_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(rating: :desc).paginate(:per_page => 10, :page => params[:page])
 			if top_rated_movies.present?
 				s_value = 1
 			else
@@ -53,7 +53,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 			end
 		elsif params[:type] == "Hollywood"
 			type_id = MovieType.where(:title => 'Hollywood').first.id
-			top_rated_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(rating: :desc).paginate(:per_page => 5, :page => params[:page])
+			top_rated_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(rating: :desc).paginate(:per_page => 10, :page => params[:page])
 			if top_rated_movies.present?
 				s_value = 1
 			else
@@ -61,7 +61,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 			end
 		else
 			type_id = MovieType.where(:title => 'Bollywood').first.id
-			top_rated_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(rating: :desc).paginate(:per_page => 5, :page => params[:page])
+			top_rated_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(rating: :desc).paginate(:per_page => 10, :page => params[:page])
 			if top_rated_movies.present?
 				s_value = 1
 			else
@@ -82,7 +82,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 	def getLatestMovies
 		if params[:type] == "Hindi"
 			type_id = MovieType.where(:title => 'Bollywood').first.id
-			latest_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 5, :page => params[:page])
+			latest_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 10, :page => params[:page])
 			if latest_movies.present?
 				s_value = 1
 			else
@@ -90,7 +90,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 			end
 		elsif params[:type] == "Hollywood"
 			type_id = MovieType.where(:title => 'Hollywood').first.id
-			latest_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 5, :page => params[:page])
+			latest_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 10, :page => params[:page])
 			if latest_movies.present?
 				s_value = 1
 			else
@@ -98,7 +98,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 			end
 		else
 			type_id = MovieType.where(:title => 'Hindi').first.id
-			latest_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 5, :page => params[:page])
+			latest_movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 10, :page => params[:page])
 			if latest_movies.present?
 				s_value = 1
 			else
@@ -121,7 +121,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 	def getUpcomingMovies
 		if params[:type] == "Hindi"
 			type_id = MovieType.where(:title => 'Bollywood').first.id
-			upcoming_movies = Movie.where('(release_date > ? AND movie_type_id= ?)', Date.today, type_id).order(:release_date).paginate(:per_page => 5, :page => params[:page])
+			upcoming_movies = Movie.where('(release_date > ? AND movie_type_id= ?)', Date.today, type_id).order(:release_date).paginate(:per_page => 10, :page => params[:page])
 			if upcoming_movies.present?
 				s_value = 1
 			else
@@ -129,7 +129,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 			end 
 		elsif params[:type] == "Hollywood"
 			type_id = MovieType.where(:title => 'Hollywood').first.id
-			upcoming_movies = Movie.where('(release_date > ? AND movie_type_id= ?)', Date.today, type_id).order(:release_date).paginate(:per_page => 5, :page => params[:page])
+			upcoming_movies = Movie.where('(release_date > ? AND movie_type_id= ?)', Date.today, type_id).order(:release_date).paginate(:per_page => 10, :page => params[:page])
 			if upcoming_movies.present?
 				s_value = 1
 			else
@@ -137,7 +137,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 			end 
 		else
 			type_id = MovieType.where(:title => 'Bollywood').first.id
-			upcoming_movies = Movie.where('(release_date > ? AND movie_type_id= ?)', Date.today, type_id).order(:release_date).paginate(:per_page => 5, :page => params[:page])
+			upcoming_movies = Movie.where('(release_date > ? AND movie_type_id= ?)', Date.today, type_id).order(:release_date).paginate(:per_page => 10, :page => params[:page])
 			if upcoming_movies.present?
 				s_value = 1
 			else
