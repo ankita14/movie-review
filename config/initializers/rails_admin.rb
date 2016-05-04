@@ -326,6 +326,10 @@ RailsAdmin.config do |config|
 		navigation_icon 'icon-fire'
 		parent Movie
 		list do
+			field :id do
+        filterable false
+        searchable false
+      end
 			field :title do
         filterable false
         searchable true
