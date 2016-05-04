@@ -158,7 +158,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 	def getMovies
 		if (params[:searchCon].present? && params[:type].present?)
 			if params[:type] == 'All'
-				movies = Movie.search(params[:searchCon]).paginate(:per_page => 5, :page => params[:page])
+				movies = Movie.search(params[:searchCon]).paginate(:per_page => 10, :page => params[:page])
 				if movies.present?
 					s_value = 1
 				else
@@ -167,7 +167,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 			end				
 		elsif params[:type] == "Hindi"
 			type_id = MovieType.where(:title => 'Bollywood').first.id
-			movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 5, :page => params[:page])
+			movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 10, :page => params[:page])
 			if movies.present?
 				s_value = 1
 			else
@@ -175,7 +175,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 			end
 		elsif params[:type] == "Hollywood"
 			type_id = MovieType.where(:title => 'Hollywood').first.id
-			movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 5, :page => params[:page])
+			movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 10, :page => params[:page])
 			if movies.present?
 				s_value = 1
 				more = 1
@@ -184,7 +184,7 @@ class Api::V1::MoviesController < Api::V1::BaseController
 			end
 		else
 			type_id = MovieType.where(:title => 'Bollywood').first.id
-			movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 5, :page => params[:page])
+			movies = Movie.where(:release_date => 3.months.ago..Date.today, :movie_type_id => type_id).order(release_date: :desc).paginate(:per_page => 10, :page => params[:page])
 			if movies.present?
 				s_value = 1
 			else
