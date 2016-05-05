@@ -26,7 +26,7 @@ class ReviewsController < ApplicationController
 	# POST /reviews.json
 	def create
 		@review = Review.new(review_params)
-		# @review.user_id = current_user.id
+		@review.user_id = current_user.id
 		
 		# if @review.save
 		#   redirect_to @movie
@@ -36,7 +36,7 @@ class ReviewsController < ApplicationController
 
 		respond_to do |format|
 			if @review.save
-				# format.html { redirect_to movie_with_title_path(@review.movie.slug), notice: 'Review has been created successfully, it will be displayed here once approved by admin.' }
+				format.html { redirect_to movie_with_title_path(@review.movie.slug), notice: 'Review has been created successfully, it will be displayed here once approved by admin.' }
 				format.json { render :show, status: :created, location: @review }
 				format.js#{ flash[:notice] = 'Review has been created successfully, it will be displayed here once approved by admin.' }
 			else
