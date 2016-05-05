@@ -126,7 +126,7 @@
 			  <br/>
 			  <p><label>Share us on</label> <%#= social_share_button_tag(@movie.title, :url => "http://192.168.1.21:3000/movie/#{@movie.slug}", :popup => "true") %></p>
 
-			  <%= social_share_button_tag(@movie.title, :url => "https://viva-movie-review.herokuapp.com/movie/#{@movie.slug}", :image => "#{@movie.image}", via: "MovieReview") %>
+			  <%#= social_share_button_tag(@movie.title, :url => "https://viva-movie-review.herokuapp.com/movie/#{@movie.slug}", :image => "#{@movie.image}", via: "MovieReview") %>
 
 			  <% if @movie.release_date.present? %>
 
