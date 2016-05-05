@@ -2,7 +2,7 @@ namespace :database do
 	desc "Detect database that's being used and then increment its id"
 	task autoincrement: :environment do
 
-		tables = ["users", "movies", "critics_ratings", "genres_movies"]
+		tables = ["users", "movies", "critics_ratings"]
 		tables.each do |table|
 		  result = ActiveRecord::Base.connection.execute("SELECT id FROM #{table} ORDER BY id DESC LIMIT 1")
 		  if result.any?
