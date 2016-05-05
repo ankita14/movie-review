@@ -17,35 +17,35 @@ admin.save!
     end
   end
 
-  # sql = File.read('db/movies.sql')
-  # statements = sql.split(/;$/)
-  # statements.pop
+  sql = File.read('db/movies.sql')
+  statements = sql.split(/;$/)
+  statements.pop
 
-  # ActiveRecord::Base.transaction do	 
-  #   statements.each do |statement| 	 
-  #     connection.execute(statement)
-  #   end
-  # end
+  ActiveRecord::Base.transaction do	 
+    statements.each do |statement| 	 
+      connection.execute(statement)
+    end
+  end
 
-  # sql = File.read('db/reviews.sql')
-  # statements = sql.split(/;$/)
-  # statements.pop
+  sql = File.read('db/reviews.sql')
+  statements = sql.split(/;$/)
+  statements.pop
 
-  # ActiveRecord::Base.transaction do  
-  #   statements.each do |statement|   
-  #     connection.execute(statement)
-  #   end
-  # end
+  ActiveRecord::Base.transaction do  
+    statements.each do |statement|   
+      connection.execute(statement)
+    end
+  end
 
-  # sql = File.read('db/users.sql')
-  # statements = sql.split(/;$/)
-  # statements.pop
+  sql = File.read('db/users.sql')
+  statements = sql.split(/;$/)
+  statements.pop
   
-  # ActiveRecord::Base.transaction do  
-  #   statements.each do |statement|   
-  #     connection.execute(statement)
-  #   end
-  # end
+  ActiveRecord::Base.transaction do  
+    statements.each do |statement|   
+      connection.execute(statement)
+    end
+  end
 
 
 # end
