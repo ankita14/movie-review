@@ -149,7 +149,7 @@ RailsAdmin.config do |config|
 				filterable false
 				searchable false
 				pretty_value do
-		      value.try(:email)
+		      value.try(:username)
 		    end
 			end
 		end
