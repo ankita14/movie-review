@@ -66,7 +66,7 @@
 				<!-- <a href="#"><h2><%#= @blog.title %></h2></a> -->
 			  <p>
 				<% if @movie.image.present? %>
-				  <%= image_tag(@movie.image.indexThumb.url) %>
+				  <%= image_tag(@movie.image.indexThumb.url), :class => 'bigimg' %>
 				<% else %>
 					<%= image_tag("/assets/not_available.jpg") %>
 				<% end %>        
@@ -596,6 +596,11 @@
     margin-left: -243px !important;
     width: 400px !important;   
 	}
+
+	.bigimg img {
+    height: 300px;
+    width: 100%;
+}
 </style>
 
 
