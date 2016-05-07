@@ -31,6 +31,8 @@
 
 				<% if index == 8 %>
 					&nbsp;
+
+						<% if @holly_latest_between_banner.present? %>
 					
 							<% @holly_latest_between_banner.each do |banner| %>
 								
@@ -72,6 +74,8 @@
 								<% end %>
 								
 							<% end %>
+							
+						<% end %>
 						
 				<% end %>
 

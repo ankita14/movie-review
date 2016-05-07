@@ -31,6 +31,8 @@
 
 				<% if index == 8 %>
 					&nbsp;
+
+						<% if @holly_top_rated_between_banner %>
 					
 							<% @holly_top_rated_between_banner.each do |banner| %>
 								
@@ -72,6 +74,7 @@
 								<% end %>
 								
 							<% end %>
+						<% end %>
 						
 				<% end %>
 
