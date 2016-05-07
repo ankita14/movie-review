@@ -136,7 +136,7 @@ a.mov_link:hover {
 	border: 2px solid rgb(152, 152, 152);
 }
 
-.addclass a.imgcls img{ height: 210px;
+.addclass a.imgcls img{ height: 211px;
     width: 100%;}
 
 .movie2 {
@@ -197,16 +197,4 @@ margin: 92px 0px 0px;
 
 .btn-primary:hover {
     background-color: #0997f0;
-}
-
-/*.dropdown:hover ul.dropdown-menu {
-    display: block;
-}*/
-
-/*header .dropdown-menu { margin: 0px; }
-
-header.navbar .nav li:hover a {   color: #0997f0;}*/
-
-header .dropdown-menu {
-    margin-top: 0px! important;
 }
