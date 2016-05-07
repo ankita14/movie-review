@@ -16,14 +16,6 @@ class ImageUploader < CarrierWave::Uploader::Base
 		"uploads/#{model.class.to_s.underscore}"
 	end
 
-	# Provide a default URL as a default if there hasn't been a file uploaded:
-	# def default_url
-	#   # For Rails 3.1+ asset pipeline compatibility:
-	#   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-	#
-	#   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
-	# end
-
 	# Process files as they are uploaded:
 	# process :scale => [300, 600]
 	#
@@ -33,13 +25,15 @@ class ImageUploader < CarrierWave::Uploader::Base
 
 	# Create different versions of your uploaded files:
 	version :thumb do
-		process :resize_to_fill => [600, 400]
+		process :resize_to_fit => [315, 200]
 	end
 
 	version :indexThumb do
-		# process :resize_to_fill => [500, 600]
-		# process :resize_to_limit => [-1, 300]
-		process :resize_to_fit => [800, 10000]
+		process :resize_to_fit => [800, 500]
+	end
+
+	version :mobile do
+	  process resize_to_fit: [150, 150]
 	end
 
 	# Add a white list of extensions which are allowed to be uploaded.
@@ -47,11 +41,5 @@ class ImageUploader < CarrierWave::Uploader::Base
 	def extension_white_list
 		%w(jpg jpeg gif png)
 	end
-
-	# Override the filename of the uploaded files:
-	# Avoid using model.id or version_name here, see uploader/store.rb for details.
-	# def filename
-	#   "something.jpg" if original_filename
-	# end
 
 end

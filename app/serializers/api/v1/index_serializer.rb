@@ -28,14 +28,11 @@ class Api::V1::IndexSerializer < ActiveModel::Serializer
 	end
 
 	def thumbnail
-		# if object.thumbnail.present?
-			if object.thumbnail.file.exists?
-				object.thumbnail = "https://viva-movie-review.herokuapp.com#{object.thumbnail.url}"
-			else
-				object.thumbnail = "https://viva-movie-review.herokuapp.com/assets/not_available.jpg"
-			end
-		# end
-		
+		if object.thumbnail.file.exists?
+			object.thumbnail = "https://viva-movie-review.herokuapp.com#{object.thumbnail.mobile.url}"
+		else
+			object.thumbnail = "https://viva-movie-review.herokuapp.com/assets/not_available.jpg"
+		end		
 	end
 
 end
