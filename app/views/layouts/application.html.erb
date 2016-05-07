@@ -5,7 +5,7 @@
 	
 		<title><%= @movie.title %></title>
 		<meta name="keywords" content="Movie Reviews, Vivacity Infotech, <%= @movie.star_cast %> <% if @movie.movie_type %>, <%= @movie.movie_type.title %> <% end %> <% if @movie.genres %> , <% @movie.genres.each do |genre| %> <%= genre.title %> <% end %> <% end %>"/>
-		<meta name="description" content="<%= description(@movie.description) %>"/>
+		<meta name="description" content="<% if @movie.description %><%= description(@movie.description) %> <% end %>" />
 	<% else %>
 		<title>MovieReview</title>
 	<% end %>
@@ -15,6 +15,7 @@
 
 	
 	<%= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js' %>
+
 
 	<link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
 	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
