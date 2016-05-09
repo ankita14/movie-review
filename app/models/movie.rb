@@ -25,7 +25,7 @@ class Movie < ActiveRecord::Base
 	has_many :featured_latests
 	validates :title, presence: true
 	validates :release_date, presence: true
-	# validates :movie_length, presence: true
+	validates :movie_type, presence: true
 	validates :director, presence: true
 	# validates :image, presence: true
 	# validates :rating, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 5, allow_blank: true }
