@@ -123,7 +123,23 @@
 					
 			  	<!-- </h4></p> -->
 			  <% end %>
-			  <br/>
+			  
+
+			  <% current_url = request.fullpath %>
+
+			  <div class="social-likes" data-url="http://viva-movie-review.herokuapp.com<%= request.fullpath %>" data-title="Vivacity">
+					<div class="facebook" title="Share link on Facebook">Facebook</div>
+					<div class="twitter" data-via="Vivacity" data-related="Vivacity" title="Share link on Twitter">Twitter</div>
+					<div class="plusone" title="Share link on Google+">Google+</div>
+					<div class="pinterest" title="Share image on Pinterest" data-media="">Pinterest</div>
+				</div>
+
+			  <!-- <div class="social-likes">
+	<div class="facebook" title="Share link on Facebook">Facebook</div>
+	<div class="twitter" title="Share link on Twitter">Twitter</div>
+	<div class="plusone" title="Share link on Google+">Google+</div>
+	<div class="pinterest" title="Share image on Pinterest" data-media="">Pinterest</div>
+</div> -->
 			  <!-- <p><label>Share us on</label> <%#= social_share_button_tag(@movie.title, :url => "http://192.168.1.21:3000/movie/#{@movie.slug}", :popup => "true") %></p> -->
 
 			  <%#= social_share_button_tag(@movie.title, :url => "https://viva-movie-review.herokuapp.com/movie/#{@movie.slug}", :image => "#{@movie.image}", via: "MovieReview") %>
@@ -598,8 +614,8 @@
 	}
 
 	.bigimg img {
-    height: 300px;
-    width: 100%;
+    height: 300px !important;
+    width: 100% ;
 }
 </style>
 
