@@ -8,7 +8,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 		if app.save
       notif = app.notifications.build(
         destinations: [params[:regID]],
-        data: { message: 'App installed successfully.' }
+        data: { message: 'Welcome User, Thanks for installing our application. We will provide you lots of information about movies like release date, reviews, starcast etc.' }
       )
       if notif.save
         app.push_notifications
