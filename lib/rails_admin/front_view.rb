@@ -33,19 +33,8 @@ module RailsAdmin
 					false
 				end
 				register_instance_option :controller do
-					Proc.new do
-						puts "242424"
-						puts "#{@object.slug}"
-						puts "242424"
-						# @object.update_attribute(:approved, true)
-				    # flash[:notice] = "Review has been approved."
-				 
-				    redirect_to "https://viva-movie-review.herokuapp.com/movie/#{@object.slug}"
-						# return 
-						# redirect_to root_path
-						# @objects.bollywood_hungama
-						# render action: @objects.bollywood_hungama
-						# redirect_to back_or_index
+					Proc.new do		 
+				  redirect_to "https://viva-movie-review.herokuapp.com/movie/#{@object.slug}"			
 					end
 				end
 			end
