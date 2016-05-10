@@ -12,7 +12,7 @@ class Api::V1::UsersController < Api::V1::BaseController
       )
       if notif.save
         app.push_notifications
-        notif.reload             
+        # notif.reload             
       end     
     end
 		
