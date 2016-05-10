@@ -40,7 +40,7 @@ module RailsAdmin
 						# @object.update_attribute(:approved, true)
 				    # flash[:notice] = "Review has been approved."
 				 
-				    redirect_to "http://192.168.1.21:3000/movie/#{@object.slug}"
+				    redirect_to "https://viva-movie-review.herokuapp.com/movie/#{@object.slug}"
 						# return 
 						# redirect_to root_path
 						# @objects.bollywood_hungama
