@@ -50,4 +50,8 @@ en:
         menu: 'Unapproved Reviews'
         title: 'Unapproved Reviews'
         breadcrumb: 'Unapproved Reviews'
+      front_view:
+        menu: 'View on Site'
+        title: 'View on Site'
+        breadcrumb: 'View on Site'
   hello: "Hello world"

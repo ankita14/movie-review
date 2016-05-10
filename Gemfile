@@ -43,8 +43,11 @@ gem 'social-share-button'
 gem 'bootstrap-multiselect-rails'
 gem 'active_model_serializers'
 gem 'devise-encryptable'
-gem 'gcm'
+# gem 'gcm'
+gem 'rails-push-notifications', '~> 0.2.0'
 gem "twitter-bootstrap-rails"
+gem 'client_side_validations'
+# gem 'bootstrap-wysihtml5-rails'
 # Use ActiveModel has_secure_password
 gem 'bcrypt'#, '~> 3.1.7'
 

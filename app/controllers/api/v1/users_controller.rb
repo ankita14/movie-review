@@ -1,17 +1,26 @@
-require 'gcm'
 class Api::V1::UsersController < Api::V1::BaseController
 	# skip_before_filter :verify_authenticity_token, :only => :create
 
 	def saveRegID
-		gcm = GCM.new('AIzaSyDsMw3IYd_ocq_i3p9TPuRYlmrQa5-gLNI')
-		msg = "Movie review app has been installed successfully."
-		options = {data: {msg: "Movie review app has been installed successfully."}}
+		app = RailsPushNotifications::GCMApp.new
+		app.gcm_key = 'AIzaSyDsMw3IYd_ocq_i3p9TPuRYlmrQa5-gLNI'
+		app.save
+		if app.save
+      notif = app.notifications.build(
+        destinations: [params[:regID]],
+        data: { message: 'App installed successfully.' }
+      )
+      if notif.save
+        app.push_notifications
+        notif.reload             
+      end     
+    end
+		
 		if (params[:regID].present?)
 			regid = params[:regID]
 			connection = ActiveRecord::Base.connection
 			statement = "INSERT INTO register_devices(register) VALUES('#{regid}')";
 			if connection.execute(statement)
-				gcm.send(regid, options)
 				render :json => { 
 		      :success => 1, 
 		      :message => "Device registration ID added successfully"

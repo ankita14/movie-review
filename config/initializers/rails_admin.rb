@@ -12,6 +12,8 @@ require Rails.root.join('lib', 'rails_admin', 'approved_review_list.rb')
 RailsAdmin::Config::Actions.register(RailsAdmin::Config::Actions::ApprovedReviewList)
 require Rails.root.join('lib', 'rails_admin', 'unapproved_review_list.rb')
 RailsAdmin::Config::Actions.register(RailsAdmin::Config::Actions::UnapprovedReviewList)
+require Rails.root.join('lib', 'rails_admin', 'front_view.rb')
+RailsAdmin::Config::Actions.register(RailsAdmin::Config::Actions::FrontView)
 
 RailsAdmin.config do |config|
 
@@ -410,6 +412,10 @@ RailsAdmin.config do |config|
 
 		approved_review_list do
 			only Review
+		end
+
+		front_view do
+			only Movie
 		end
 
 		# export

@@ -53,7 +53,7 @@
 					<% end %>
 
 					<a href="#" id="btnDel" class="deletethis">Delete </a>
-	    
+		
 					
 				</div>		
 
@@ -89,7 +89,7 @@
 				</div>
 
 				<a href="#" id="btnDel">Delete </a>
-    			
+				
 			</div>		
 
 			<a href="#" id="btnAdd">Add more</a>
@@ -113,55 +113,55 @@
 	
 	$(document).ready(function() {
 
-		// alert("test");
-    $('#btnAdd').click(function(e) {
-    	e.preventDefault();
-    		
-        var $address = $('#address');
-        var num = $('.clonedAddress').length; // there are 5 children inside each address so the prevCloned address * 5 + original
-        var newNum = new Number(num + 1);
-        var newElem = $address.clone().attr('id', 'address' + newNum).addClass('clonedAddress');
-        
-        //set all div id's and the input id's
-        newElem.children('div').each (function (i) {
-            this.id = 'input' + (newNum*3 + i);
-        });
-        
-        newElem.find('input').each (function () {
-            // this.id = this.id + newNum;
-            // this.name = this.name + newNum;
-            this.value = ''
-        });
-         newElem.find('textarea').each (function () {
-            // this.id = this.id + newNum;
-            // this.name = this.name + newNum;
-            this.value = ''
-        });
-         
-        if (num > 0) {
-            $('.clonedAddress:last').after(newElem);
-        } else {
-            $address.after(newElem);
-        }
-            
+	$('.front_view_member_link').find('a').attr('target','_blank');
+	$('#btnAdd').click(function(e) {
+		e.preventDefault();
+			
+		var $address = $('#address');
+		var num = $('.clonedAddress').length; // there are 5 children inside each address so the prevCloned address * 5 + original
+		var newNum = new Number(num + 1);
+		var newElem = $address.clone().attr('id', 'address' + newNum).addClass('clonedAddress');
+		
+		//set all div id's and the input id's
+		newElem.children('div').each (function (i) {
+			this.id = 'input' + (newNum*3 + i);
+		});
+		
+		newElem.find('input').each (function () {
+			// this.id = this.id + newNum;
+			// this.name = this.name + newNum;
+			this.value = ''
+		});
+		 newElem.find('textarea').each (function () {
+			// this.id = this.id + newNum;
+			// this.name = this.name + newNum;
+			this.value = ''
+		});
+		 
+		if (num > 0) {
+			$('.clonedAddress:last').after(newElem);
+		} else {
+			$address.after(newElem);
+		}
+			
 
-        // $('#btnDel').removeAttr('disabled');
-         $('#btnDel').css('cursor','pointer');
+		// $('#btnDel').removeAttr('disabled');
+		 $('#btnDel').css('cursor','pointer');
 
-            
-        if (newNum == 3) $('#btnAdd').attr('disabled', 'disabled');
-    });
-    // $('#btnDel').click(function(e) {
-    // 	alert("cool");
-    // 	    	e.preventDefault();
+			
+		if (newNum == 3) $('#btnAdd').attr('disabled', 'disabled');
+	});
+	// $('#btnDel').click(function(e) {
+	// 	alert("cool");
+	// 	    	e.preventDefault();
 
-    //     $('.clonedAddress:last').remove();
-    //     $('#btnAdd').removeAttr('disabled');
-    //     if ($('.clonedAddress').length == 0) {
-    //         // $('#btnDel').attr('disabled', 'disabled');
-    //         $('#btnDel').css('cursor','not-allowed');
-    //     }
-    // });
+	//     $('.clonedAddress:last').remove();
+	//     $('#btnAdd').removeAttr('disabled');
+	//     if ($('.clonedAddress').length == 0) {
+	//         // $('#btnDel').attr('disabled', 'disabled');
+	//         $('#btnDel').css('cursor','not-allowed');
+	//     }
+	// });
 $('.deletethis').bind( "click", function( e ) {
 	e.preventDefault();
 	$(this).closest('.clonedAddress').remove();
@@ -172,18 +172,18 @@ $('.deletethis').bind( "click", function( e ) {
 // });
 
 
-    // $('#btnDel').attr('disabled', 'disabled');
-    // $('#btnDel').css('cursor','not-allowed');
+	// $('#btnDel').attr('disabled', 'disabled');
+	// $('#btnDel').css('cursor','not-allowed');
 });
 </script>
 
 <style type="text/css">
 	.btn_hide .form-group.form-actions {
-    display: none;
+	display: none;
 	}
 	.adjust_area {
 	  height: 157px;
-    width: 416px !important;
+	width: 416px !important;
 	}
 	}
 </style>
