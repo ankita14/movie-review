@@ -34,7 +34,7 @@ module RailsAdmin
 				end
 				register_instance_option :controller do
 					Proc.new do		 
-				  # redirect_to "https://viva-movie-review.herokuapp.com/movie/#{@object.slug}"			
+				  redirect_to "https://viva-movie-review.herokuapp.com/movie/#{@object.slug}"			
 					end
 				end
 			end
