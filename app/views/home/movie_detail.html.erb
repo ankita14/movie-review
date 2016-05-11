@@ -155,6 +155,7 @@
 							<!-- <h4>Critics Ratings:</h4> -->
 
 							<% @movie.critics_ratings.each do |cr| %>
+							<% if cr.title.present? %>
 								<b> <%= cr.title%>:</b>
 								<div id="starrating">
 									<div class="c_rating-<%= cr.id %>">
@@ -164,6 +165,7 @@
 										<p><%= cr.reviews.html_safe %></p>
 									<% end %>
 								</div>
+							<% end %>
 								<script type="text/javascript">
 									$(function(){
 										$.getScript( "https://cdnjs.cloudflare.com/ajax/libs/raty/2.7.0/jquery.raty.min.js", function( data, textStatus, jqxhr ) {
